@@ -43,5 +43,20 @@ class UserController extends Controller
         return view('user.tugas');
     }
 
+    public function penilaian(){
+        return view('user.penilaian');
+    }
+
+    public function penilaiansiswa(){
+        return view('user.penilaiansiswa');
+    }
+
+    public function nilaisiswa(){
+        return view('user.nilaisiswa');
+    }
+
+    public function catatankasus(){
+        return view('user.catatankasus');
+    }
 
 }

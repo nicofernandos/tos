@@ -58,7 +58,7 @@
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label">Tanggal Pengugasan</label>
             <div class="col-sm-10">
-              <input type="date" name="tglpengumpulan" class="form-control" value="{{ date('Y-m-d') }}" >
+              <input type="date" name="tglpengumpulan " class="form-control" value="{{ date('Y-m-d') }}" >
             </div>
           </div>
 
