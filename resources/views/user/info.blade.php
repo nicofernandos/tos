@@ -1,91 +1,45 @@
 @extends('layouts.userlayouts')
-@section('title','TOS Penilaian')
+@section('title','TOS Info')
 @section('content')
-@section('style')
-<style>
-    .nilai-input {
-        width: 80px;
-        text-align: center;
-    }
-</style>
-@endsection
 
-<div class="container-fluid px-1">
-    <div class="row mb-1">
+<div class="container-fluid px-4">
+    <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <a href="{{ url('sekolah') }}" class="btn back-btn">
                     <i class="bx bx-arrow-back me-1"></i> Kembali
                 </a>
             </div>
-        </div>
-    </div>
-</div>
-
-<div class="card mb-2">
-    <div class="row">
-        <!-- Informasi Siswa -->
-        <div class="col-12 mb-3">
-            <div class="bg-light p-3 rounded">
-                <h6 class="fw-bold text-primary mb-3">
-                    <i class="bx bx-user me-2"></i>Informasi Siswa
-                </h6>
-
-                <div class="row mb-2">
-                    <div class="col-sm-6 col-md-6 col-lg-2">
-                        <span class="fw-medium">Nama</span>
+            
+            <div class="class-header">
+                <div class="row align-items-center">
+                    <div class="col-md-5 my-2">
+                        <img src="{{ asset('foto/sklh.jpeg') }}" class="img-fluid" style="border-radius: 20px; max-height:200px;"  alt="">
                     </div>
-                    <div class="col-sm-6 col-md-6 col-lg-10">
-                        <span class="fw-muted text-muted">Andre</span>
+                    <div class="col-md-7">
+                        <h1 class="display-4 fw-bold mb-2">Kelas 7A</h1>
+                        <h3 class="display-4 fw-bold mt-1">Informasi</h3>
                     </div>
                 </div>
-
-                <div class="row mb-2">
-                    <div class="col-sm-6 col-md-6 col-lg-2">
-                        <span class="fw-medium">Tanggal Lahir</span>
-                    </div>
-                    <div class="col-sm-6 col-md-6  col-lg-10">
-                        <span class="fw-medium text-muted">10-20-12</span>
-                    </div>
-                </div>
-
-                <div class="row mb-2">
-                    <div class="col-sm-6 col-md-6  col-lg-2">
-                        <span class="fw-medium">Kelas</span>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-10">
-                        <span class="fw-medium text-muted">7A</span>
-                    </div>
-                </div>
-
-                <div class="row mb-2">
-                    <div class="col-sm-6 col-md-6 col-lg-2">
-                        <span class="fw-medium">Alamat</span>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-10">
-                        <span class="fw-medium text-muted">Jl. Merdeka No. 12</span>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
 </div>
-
 
 <div class="card">
-    <h5 class="card-header text-center">Mata Pelajaran Agama</h5>
+    <h5 class="card-header text-center">Informasi</h5>
     <div class="card-body">
         <div class="row mb-3">
-            <label class="col-sm-2 col-form-control mb-2" for=""> Jenis Nilai  </label>
+            <label class="col-sm-2 col-form-control mb-2" for=""> Tanggal  </label>
             <div class="col-sm-10">
-                <input type="text" name="jenisnilai" class="form-control" id="" value="" placeholder="Jenis Nilai">
+                <input type="date" name="tanggal" class="form-control" id="" value="" placeholder="Jenis Nilai">
             </div>
         </div>
-        <div class="row mb-3">
-            <label class="col-sm-2 col-form-control mb-2" for=""> Nilai  </label>
+        <div class="row mb-4">
+            <label class="col-sm-2 col-form-label">Deskripsi Informasi</label>
             <div class="col-sm-10">
-                <input type="number" name="nilai" class="form-control" id="" value="" placeholder="Masukkan Nilai">
+                <div id="editorDeskripsi"></div>
+                <textarea name="deskripsi" id="deskripsi" style="display:none;" required></textarea>
             </div>
         </div>
 
@@ -101,17 +55,17 @@
 
 @endsection
 <style>
-.ck-powered-by {
-    display: none !important;
-}
+        .ck-powered-by {
+        display: none !important;
+    }
 
-.ck-balloon-panel[class*="powered-by"] {
-    display: none !important;
-}
+    .ck-balloon-panel[class*="powered-by"] {
+        display: none !important;
+    }
 
-.ck-editor__editable {
-    min-height: 200px;
-}
+    .ck-editor__editable {
+        min-height: 200px;
+    }
 </style>
 @section('script')
 <script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/ckeditor.js"></script>

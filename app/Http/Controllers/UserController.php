@@ -59,4 +59,19 @@ class UserController extends Controller
         return view('user.catatankasus');
     }
 
+    public function catatankasussiswa(){
+        return view('user.catatankasussiswa');
+    }
+
+    public function jurnalkonseling(){
+        return view('user.jurnalkonseling');
+    }
+    
+    public function jurnalkonselingsiswa(){
+        return view('user.jurnalkonselingsiswa');
+    }
+
+    public function info(){
+        return view('user.info');
+    }
 }
