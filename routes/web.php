@@ -71,6 +71,7 @@ Route::get('/info',[UserController::class,'info']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+//Auth
 Route::middleware(['isLogin'])->controller(AdminController::class)->group(function () {
     
 });
