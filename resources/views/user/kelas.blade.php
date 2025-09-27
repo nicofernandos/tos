@@ -145,8 +145,8 @@
                         <img src="{{ asset('foto/sklh.jpeg') }}" class="img-fluid" style="border-radius: 20px; max-height:200px;"  alt="">
                     </div>
                     <div class="col-md-7">
-                        <h1 class="display-4 fw-bold mb-2">Kelas 7A</h1>
-                        <p class="lead mb-0">32 Murid</p>
+                        <h1 class="display-4 fw-bold mb-2">Kelas {{ $isikelas->nam }}</h1>
+                        <p class="lead mb-0">{{ $isikelas->qty }} Murid</p>
                         <span class="text-muted">Wali Kelas : Pak Tarno</span>
                     </div>
                 </div>
@@ -156,7 +156,7 @@
 
     <div class="row g-4">
         <div class="col-6 col-md-4 col-lg-3">
-            <a href="{{ url('siswa') }}" class="card menu-card d-block p-4">
+            <a href="{{ url('siswa/'.$isikelas->nam) }}" class="card menu-card d-block p-4">
                 <div class="text-center">
                     <i class="bx bx-group menu-icon"></i>
                     <h5 class="menu-title">Data Siswa</h5>
@@ -165,7 +165,7 @@
         </div>
 
         <div class="col-6 col-md-4 col-lg-3">
-            <a href="{{ url('absensisiswa')}}" class="card menu-card d-block p-4">
+            <a href="{{ url('absensisiswa/'.$isikelas->id)}}" class="card menu-card d-block p-4">
                 <div class="text-center">
                     <i class="bx bx-check-circle menu-icon"></i>
                     <h5 class="menu-title">Absensi Siswa</h5>

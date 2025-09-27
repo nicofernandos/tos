@@ -1,12 +1,66 @@
 @extends('layouts.userlayouts')
-@section('title','TOS')
-@section('content')
+@section('title','TOS - Data Siswa')
+
 @section('style')
 <style>
-
+    .back-btn {
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        color: #6c757d;
+        border-radius: 8px;
+        padding: 8px 16px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    .back-btn:hover {
+        background: #e9ecef;
+        color: #495057;
+    }
+    .class-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 20px;
+        padding: 2rem;
+        color: white;
+        margin-bottom: 2rem;
+    }
+    .class-header h1, .class-header h3 {
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    .card {
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+        border: none;
+    }
+    .card-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 15px 15px 0 0 !important;
+        padding: 1.5rem;
+        border: none;
+    }
+    .table {
+        margin-bottom: 0;
+    }
+    .table th {
+        background: #f8f9fa;
+        border-color: #dee2e6;
+        font-weight: 600;
+        color: #495057;
+    }
+    .student-link {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .student-link:hover {
+        color: #764ba2;
+        text-decoration: underline;
+    }
 </style>
 @endsection
 
+@section('content')
 <div class="container-fluid px-4">
     <div class="row mb-4">
         <div class="col-12">
@@ -19,77 +73,96 @@
             <div class="class-header">
                 <div class="row align-items-center">
                     <div class="col-md-5 my-2">
-                        <img src="{{ asset('foto/sklh.jpeg') }}" class="img-fluid" style="border-radius: 20px; max-height:200px;"  alt="">
+                        <img src="{{ asset('foto/sklh.jpeg') }}" class="img-fluid" style="border-radius: 20px; max-height:200px;" alt="Foto Sekolah">
                     </div>
                     <div class="col-md-7">
-                        <h1 class="display-4 fw-bold mb-2">Kelas 7A</h1>
-                        <h3 class="display-4 fw-bold mt-1">Data Siswa</h3>
+                        @if(isset($siswa) && $siswa->count() > 0)
+                            <h1 class="display-4 fw-bold mb-2">{{ $siswa->first()->kel ?? 'Kelas' }}</h1>
+                        @else
+                            <h1 class="display-4 fw-bold mb-2">Data Siswa</h1>
+                        @endif
+                        <h3 class="display-5 fw-bold mt-1">Total: {{ isset($siswa) ? $siswa->count() : 0 }} Siswa</h3>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="card">
+        <h5 class="card-header">
+            <i class="bx bx-group me-2"></i>Data Siswa
+            @if(isset($siswa) && $siswa->count() > 0)
+                - {{ $siswa->first()->kel }}
+            @endif
+        </h5>
 
+        <div class="card-body">
+            @if(isset($siswa) && $siswa->count() > 0)
+                <div class="table-responsive text-nowrap">
+                    <table id="siswaTable" class="table table-striped table-bordered dt-responsive nowrap w-100">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>NIS</th>
+                                <th>NISN</th>
+                                <th>Nama Siswa</th>
+                                <th>Tanggal Lahir</th>
+                                <th>Telepon</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($siswa as $k)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $k->nis ?? '-' }}</td>
+                                <td>{{ $k->nisn ?? '-' }}</td>
+                                <td>
+                                    <a href="{{ url('datasiswa/' . $k->id) }}" class="student-link">
+                                        {{ $k->namlen ?? 'Nama tidak tersedia' }}
+                                    </a>
+                                </td>
+                                <td>
+                                    @if($k->tgllah)
+                                        {{ \Carbon\Carbon::parse($k->tgllah)->format('d/m/Y') }}
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                                <td>{{ $k->tel ?? '-' }}</td>
+                            </tr>
+                        @endforeach
 
-</div>
-
-<div class="card">
-    <h5 class="card-header">Data Siswa</h5>
-
-    <div class="card-body">
-        <div class="table-responsive text-nowrap">
-            <table id="siswaTable" class="table table-striped table-bordered dt-responsive nowrap w-100">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>NIS</th>
-                        <th>Nama Siswa</th>
-                        <th>Kelas</th>
-                        <th>Jenis Kelamin</th>
-                        <th>Alamat</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Contoh data statis -->
-                    <tr>
-                        <td>1</td>
-                        <td>202501</td>
-                        <td>
-                            <a href="{{ url('datasiswa') }}">Andi Pratama</a></td>
-                        <td>7A</td>
-                        <td>Laki - Laki</td>
-                        <td>Jl. Merdeka No. 12</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>202502</td>
-                        <td>Budi Santoso</td>
-                        <td>7B</td>
-                        <td>Laki - Laki</td>
-                        <td>Jl. Sudirman No. 45</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>202503</td>
-                        <td>Citra Dewi</td>
-                        <td>7C</td>
-                        <td>Laki - Laki</td>
-                        <td>Jl. Diponegoro No. 8</td>
-                    </tr>
-                    <!-- Jika tidak ada data -->
-                    <!--
-                    <tr>
-                        <td colspan="6" class="text-center">Belum ada data siswa</td>
-                    </tr>
-                    -->
-                </tbody>
-            </table>
+                        </tbody>
+                    </table>
+                </div>
+            @else
+                <div class="text-center py-5">
+                    <i class="bx bx-user-x" style="font-size: 4rem; color: #6c757d;"></i>
+                    <h4 class="mt-3 text-muted">Belum ada data siswa</h4>
+                    <p class="text-muted">Data siswa untuk kelas ini belum tersedia.</p>
+                </div>
+            @endif
         </div>
     </div>
 </div>
-
-
 @endsection
+
 @section('script')
+<script>
+    $(document).ready(function() {
+        @if(isset($siswa) && $siswa->count() > 0)
+            $('#siswaTable').DataTable({
+                responsive: true,
+                pageLength: 25,
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/id.json'
+                },
+                order: [[1, 'asc']], // Sort by NIS
+                columnDefs: [
+                    { orderable: false, targets: [0] } // No sorting on number column
+                ]
+            });
+        @endif
+    });
+</script>
 @endsection

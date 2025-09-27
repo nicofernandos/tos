@@ -18,10 +18,10 @@ Route::get('/', function () {
 Route::get('/sekolah',[UserController::class,'sekolah']);
 
 //2
-Route::get('/kelas',[UserController::class,'kelas']);
+Route::get('/kelas/{id}',[UserController::class,'kelas']);
 
 //2A
-Route::get('/siswa',[UserController::class,'siswa']);
+Route::get('/siswa/{nam}',[UserController::class,'siswa']);
 
 //2.A.1
 Route::get('/datasiswa',[UserController::class,'datasiswa']);

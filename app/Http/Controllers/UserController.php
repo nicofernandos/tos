@@ -1,5 +1,8 @@
 <?php
 namespace App\Http\Controllers;
+use App\Models\Tkelas;
+use App\Models\Tkelasjenis;
+use App\Models\Tsiswa;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
@@ -20,15 +23,18 @@ class UserController extends Controller
 {
 
     public function sekolah(){
-        return view('user.sekolah');
+        $kelas = Tkelas::where('tin',4)->where('jen',4)->get();     
+        return view('user.sekolah',compact('kelas'));
     }
 
-    public function kelas(){
-        return view('user.kelas');
+    public function kelas($id){
+        $isikelas = Tkelas::where('id',$id)->firstOrFail();
+        return view('user.kelas', compact('isikelas'));
     }
 
-    public function siswa(){
-        return view('user.siswa');
+    public function siswa($nam){
+        $siswa = Tsiswa::where('kel',$nam)->get();  
+        return view('user.siswa', compact('siswa'));
     }
 
     public function datasiswa(){

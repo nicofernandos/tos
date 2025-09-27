@@ -83,13 +83,14 @@
     </div>
 
   <div class="row mb-4">
+    @foreach ($kelas as $k )
     <div class="col-6 col-sm-4 col-md-4 col-lg-4 col-xl-3 mb-4">
       <div class="card classroom-card">
-        <a href="{{url('kelas')}}">
+        <a href="{{url('kelas/'.$k->id)}}">
           <div class="card-body p-3 position-relative">
-            <img src="{{ asset('foto/sklh.jpeg') }}" alt="Kelas 7A" class="classroom-image w-100 mb-3">
+            <img src="{{ asset('foto/sklh.jpeg') }}" alt="Kelas {{ $k->nam }}" class="classroom-image w-100 mb-3">
             <div class="classroom-info border border-primary p-2 rounded-3">
-              <div class="classroom-name text-center">Kelas 7A</div>
+              <div class="classroom-name text-center"> {{ $k->nam }} </div>
             </div>
           </div>
         </a>
@@ -98,7 +99,7 @@
             <div class="col-6">
               <div class="info-section text-center">
                 <span class="info-label">Total Murid</span>
-                <div class="student-count text-primary">26</div>
+                <div class="student-count text-primary"> {{ $k->qty }}  </div>
               </div>
             </div>
             <div class="col-6">
@@ -111,89 +112,9 @@
         </div>
       </div>
     </div>
-
-    <div class="col-6 col-sm-4 col-md-4 col-lg-4 col-xl-3 mb-4">
-      <div class="card classroom-card">
-        <div class="card-body p-3 position-relative">
-          <img src="{{ asset('foto/sklh.jpeg') }}" alt="Kelas 7B" class="classroom-image img-fluid w-100 mb-3">
-          <div class="classroom-info border border-success p-2 rounded-3">
-            <div class="classroom-name text-center">Kelas 7B</div>
-          </div>
-        </div>
-        <div class="card-footer p-3">
-          <div class="row g-2">
-            <div class="col-6">
-              <div class="info-section text-center">
-                <span class="info-label">Total Murid</span>
-                <div class="student-count text-primary">28</div>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="info-section text-center">
-                <span class="info-label">Wali Kelas</span>
-                <div class="teacher-info text-danger" title="Pak Joko Susilo">Pak Joko</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-6 col-sm-4 col-md-4 col-lg-4 col-xl-3 mb-4">
-      <div class="card classroom-card">
-        <div class="card-body p-3 position-relative">
-          <img src="{{ asset('foto/sklh.jpeg') }}" alt="Kelas 8A" class="classroom-image w-100 mb-3">
-          <div class="classroom-info border border-warning p-2 rounded-3">
-            <div class="classroom-name text-center">Kelas 8A</div>
-          </div>
-        </div>
-        <div class="card-footer p-3">
-          <div class="row g-2">
-            <div class="col-6">
-              <div class="info-section text-center">
-                <span class="info-label">Total Murid</span>
-                <div class="student-count text-primary">30</div>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="info-section text-center">
-                <span class="info-label">Wali Kelas</span>
-                <div class="teacher-info text-danger" title="Bu Rani Wijaya">Bu Rani</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-6 col-sm-4 col-md-4 col-lg-4 col-xl-3 mb-4">
-      <div class="card classroom-card">
-        <div class="card-body p-3 position-relative">
-          <img src="{{ asset('foto/sklh.jpeg') }}" alt="Kelas 8B" class="classroom-image w-100 mb-3">
-          <div class="classroom-info border border-danger p-2 rounded-3">
-            <div class="classroom-name text-center">Kelas 8B</div>
-          </div>
-        </div>
-        <div class="card-footer p-3">
-          <div class="row g-2">
-            <div class="col-6">
-              <div class="info-section text-center">
-                <span class="info-label">Total Murid</span>
-                <div class="student-count text-primary">25</div>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="info-section text-center">
-                <span class="info-label">Wali Kelas</span>
-                <div class="teacher-info text-danger" title="Pak Bayu Saputra">Pak Bayu</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    @endforeach
   </div>
-
+  
   <div class="row">
     <div class="col-12">
       <div class="card shadow-sm border-0 rounded-3">

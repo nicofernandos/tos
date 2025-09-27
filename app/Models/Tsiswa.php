@@ -1,0 +1,26 @@
+<?php
+namespace App\Models;
+use Illuminate\Database\Eloquent\Model;
+
+class Tsiswa extends Model
+{
+    protected $connection = 'maidatmaspusat'; // Diperbaiki dari $connetion ke $connection
+    protected $table = 'Tsiswa';
+    protected $primaryKey = 'id';
+    public $timestamps = false;
+    protected $keyType = 'int';
+    protected $fillable = [
+        'id',
+        'nis',
+        'nisn',
+        'namlen',
+        'nampan',
+        'namnam',
+        'temlah',
+        'tgllah',
+        'jenkel',
+        'tel',
+        'rev',
+        'kel',
+    ]; 
+}
