@@ -6,11 +6,10 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <a href="{{ url('sekolah') }}" class="btn back-btn">
+                <a href="{{ url('kelas') }}" class="btn back-btn">
                     <i class="bx bx-arrow-back me-1"></i> Kembali
                 </a>
             </div>
-            
             <div class="class-header">
                 <div class="row align-items-center">
                     <div class="col-md-5 my-2">
@@ -54,7 +53,9 @@
                     <tr>
                         <td>1</td>
                         <td>202501</td>
-                        <td>Andi Pratama</td>
+                        <td>
+                           <a href="{{ url('jurnalkonselingsiswa') }}">Andi Pratam</a>
+                        </td>
                         <td>7A</td>
                         <td>Laki - Laki</td>
                         <td>Jl. Merdeka No. 12</td>

@@ -156,7 +156,7 @@
 
     <div class="row g-4">
         <div class="col-6 col-md-4 col-lg-3">
-            <a href="#" class="card menu-card d-block p-4">
+            <a href="{{ url('siswa') }}" class="card menu-card d-block p-4">
                 <div class="text-center">
                     <i class="bx bx-group menu-icon"></i>
                     <h5 class="menu-title">Data Siswa</h5>
@@ -165,7 +165,7 @@
         </div>
 
         <div class="col-6 col-md-4 col-lg-3">
-            <a href="#" class="card menu-card d-block p-4">
+            <a href="{{ url('absensisiswa')}}" class="card menu-card d-block p-4">
                 <div class="text-center">
                     <i class="bx bx-check-circle menu-icon"></i>
                     <h5 class="menu-title">Absensi Siswa</h5>
@@ -174,7 +174,7 @@
         </div>
 
         <div class="col-6 col-md-4 col-lg-3">
-            <a href="#" class="card menu-card d-block p-4">
+            <a href="{{ url('suratizin')  }}" class="card menu-card d-block p-4">
                 <div class="text-center">
                     <i class="bx bx-file menu-icon"></i>
                     <h5 class="menu-title">Surat Izin Siswa</h5>
@@ -184,7 +184,7 @@
 
     
         <div class="col-6 col-md-4 col-lg-3">
-            <a href="#" class="card menu-card d-block p-4">
+            <a href="{{ url('tugas') }}" class="card menu-card d-block p-4">
                 <div class="text-center">
                     <i class="bx bx-book-content menu-icon"></i>
                     <h5 class="menu-title">Tugas & Proyek</h5>
@@ -194,7 +194,7 @@
 
 
         <div class="col-6 col-md-4 col-lg-3">
-            <a href="#" class="card menu-card d-block p-4">
+            <a href="{{ url('penilaian') }}" class="card menu-card d-block p-4">
                 <div class="text-center">
                     <i class="bx bx-trophy menu-icon"></i>
                     <h5 class="menu-title">Penilaian</h5>
@@ -203,7 +203,7 @@
         </div>
 
         <div class="col-6 col-md-4 col-lg-3">
-            <a href="#" class="card menu-card d-block p-4">
+            <a href="{{ url('catatankasus') }}" class="card menu-card d-block p-4">
                 <div class="text-center">
                     <i class="bx bx-note menu-icon"></i>
                     <h5 class="menu-title">Catatan Kasus</h5>
@@ -212,7 +212,7 @@
         </div>
 
         <div class="col-6 col-md-4 col-lg-3">
-            <a href="#" class="card menu-card d-block p-4">
+            <a href="{{ url('jurnalkonseling') }}" class="card menu-card d-block p-4">
                 <div class="text-center">
                     <i class="bx bx-chat menu-icon"></i>
                     <h5 class="menu-title">Jurnal Konseling</h5>
@@ -222,7 +222,7 @@
 
 
         <div class="col-6 col-md-4 col-lg-3">
-            <a href="#" class="card menu-card d-block p-4">
+            <a href="{{ url('raport') }}" class="card menu-card d-block p-4">
                 <div class="text-center">
                     <i class="bx bx-medal menu-icon"></i>
                     <h5 class="menu-title">Rapor</h5>
@@ -232,7 +232,7 @@
 
     
         <div class="col-6 col-md-4 col-lg-3">
-            <a href="#" class="card menu-card d-block p-4">
+            <a href="{{ url('info') }}" class="card menu-card d-block p-4">
                 <div class="text-center">
                     <i class="bx bx-info-circle menu-icon"></i>
                     <h5 class="menu-title text-dark">Info</h5>

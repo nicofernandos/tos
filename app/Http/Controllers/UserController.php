@@ -31,6 +31,10 @@ class UserController extends Controller
         return view('user.siswa');
     }
 
+    public function datasiswa(){
+        return view('user.datasiswa');
+    }
+
     public function absensisiswa(){
         return view('user.absensisiswa');
     }
@@ -69,6 +73,14 @@ class UserController extends Controller
     
     public function jurnalkonselingsiswa(){
         return view('user.jurnalkonselingsiswa');
+    }
+
+    public function raport(){
+        return view('user.raport');
+    }
+
+    public function raportsiswa(){
+        return view('user.raportsiswa');
     }
 
     public function info(){

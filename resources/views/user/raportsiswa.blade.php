@@ -1,14 +1,9 @@
 @extends('layouts.userlayouts')
 
-@section('title', 'TOS Penilaian')
+@section('title', 'Raport Siswa')
 
 @section('style')
-<style>
-    .nilai-input {
-        width: 80px;
-        text-align: center;
-    }
-</style>
+
 @endsection
 
 @section('content')
@@ -16,7 +11,7 @@
     <div class="row mb-1">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <a href="{{ url('catatankasus') }}" class="btn back-btn">
+                <a href="{{ url('raport') }}" class="btn back-btn">
                     <i class="bx bx-arrow-back me-1"></i> Kembali
                 </a>
             </div>
@@ -75,22 +70,24 @@
 
 <!-- Form Input Kasus -->
 <div class="card">
-    <h5 class="card-header text-center">Input Kasus Siswa</h5>
+    <h5 class="card-header text-center">Raport Siswa</h5>
     <div class="card-body">
         <form id="catalogForm" action="#" method="POST">
             @csrf
-
             <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Tanggal</label>
+                <label class="col-sm-2 col-form-label">Jenis Raport</label>
                 <div class="col-sm-10">
-                    <input type="date" name="tanggal" class="form-control" placeholder="Tanggal">
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Nama Guru</label>
-                <div class="col-sm-10">
-                    <input type="text" name="namaguru" class="form-control" placeholder="Masukkan Nama Guru">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <select name="tipe" class="form-select">
+                                <option value="">Pilih Jenis Raport</option>
+                                <option value="Mid Semester Ganjil">Mid Semester Ganjil</option>
+                                <option value="Mid Semester Genap">Mid Semester Genap</option>
+                                <option value="Akhir Semester Ganjil">Akhir Semester Ganjil</option>
+                                <option value="Akhir Semester Genap">Akhir Semester Genap</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -99,13 +96,6 @@
                 <div class="col-sm-10">
                     <div id="editor"></div>
                     <textarea name="deskripsi" id="deskripsi" style="display:none;" required></textarea>
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Jumlah Poin</label>
-                <div class="col-sm-10">
-                    <input type="number" name="jumlahpoin" class="form-control" placeholder="Masukkan Poin">
                 </div>
             </div>
 
@@ -120,7 +110,7 @@
 </div>
 @endsection
 <style>
-        .ck-powered-by {
+    .ck-powered-by {
         display: none !important;
     }
 
@@ -138,7 +128,6 @@
     let editorInstance;
 
     document.addEventListener('DOMContentLoaded', function () {
-        // Init CKEditor
         ClassicEditor
             .create(document.querySelector('#editor'), {
                 toolbar: [

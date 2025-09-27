@@ -67,16 +67,32 @@
 }
 </style>
 @endsection
+
 <div class="container-fluid">
-  <div class="row">
+
+    <div class="row">
+      <div class="col-12">
+        <div class="header-section text-center">
+          <h1 class="header-title">
+            <i class="bx bx-graduation me-3"></i>
+            Sistem TOS
+          </h1>
+          <p class="header-subtitle">Kelola dan Pantau Aktivitas Kelas dengan Mudah</p>
+        </div>
+      </div>
+    </div>
+
+  <div class="row mb-4">
     <div class="col-6 col-sm-4 col-md-4 col-lg-4 col-xl-3 mb-4">
       <div class="card classroom-card">
-        <div class="card-body p-3 position-relative">
-          <img src="{{ asset('foto/sklh.jpeg') }}" alt="Kelas 7A" class="classroom-image w-100 mb-3">
-          <div class="classroom-info border border-primary p-2 rounded-3">
-            <div class="classroom-name text-center">Kelas 7A</div>
+        <a href="{{url('kelas')}}">
+          <div class="card-body p-3 position-relative">
+            <img src="{{ asset('foto/sklh.jpeg') }}" alt="Kelas 7A" class="classroom-image w-100 mb-3">
+            <div class="classroom-info border border-primary p-2 rounded-3">
+              <div class="classroom-name text-center">Kelas 7A</div>
+            </div>
           </div>
-        </div>
+        </a>
         <div class="card-footer p-3">
           <div class="row g-2">
             <div class="col-6">

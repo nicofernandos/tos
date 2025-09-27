@@ -14,7 +14,7 @@
     <div class="row mb-1">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <a href="{{ url('sekolah') }}" class="btn back-btn">
+                <a href="{{ url('penilaiansiswa') }}" class="btn back-btn">
                     <i class="bx bx-arrow-back me-1"></i> Kembali
                 </a>
             </div>

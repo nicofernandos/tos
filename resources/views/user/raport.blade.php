@@ -1,21 +1,15 @@
 @extends('layouts.userlayouts')
-@section('title','TOS')
+@section('title','TOS Raport Siswa')
 @section('content')
-@section('style')
-<style>
-
-</style>
-@endsection
 
 <div class="container-fluid px-4">
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <a href="{{ url('sekolah') }}" class="btn back-btn">
+                <a href="{{ url('kelas') }}" class="btn back-btn">
                     <i class="bx bx-arrow-back me-1"></i> Kembali
                 </a>
             </div>
-            
             <div class="class-header">
                 <div class="row align-items-center">
                     <div class="col-md-5 my-2">
@@ -23,7 +17,7 @@
                     </div>
                     <div class="col-md-7">
                         <h1 class="display-4 fw-bold mb-2">Kelas 7A</h1>
-                        <h3 class="display-4 fw-bold mt-1">Data Siswa</h3>
+                        <h3 class="display-4 fw-bold mt-1">Raport Siswa</h3>
                     </div>
                 </div>
             </div>
@@ -35,8 +29,12 @@
 </div>
 
 <div class="card">
-    <h5 class="card-header">Data Siswa</h5>
-
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">Data Siswa</h5>
+      {{-- <a href="" target="_blank" class="btn btn-sm btn-primary">
+          <i class="bx bx-printer"></i> Download Jurnal Konseling
+      </a> --}}
+  </div>
     <div class="card-body">
         <div class="table-responsive text-nowrap">
             <table id="siswaTable" class="table table-striped table-bordered dt-responsive nowrap w-100">
@@ -46,8 +44,8 @@
                         <th>NIS</th>
                         <th>Nama Siswa</th>
                         <th>Kelas</th>
-                        <th>Jenis Kelamin</th>
-                        <th>Alamat</th>
+                        <th>Tahun Ajaran </th>
+                        <th>Jenis Raport</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,27 +53,27 @@
                     <tr>
                         <td>1</td>
                         <td>202501</td>
-                        <td>
-                            <a href="{{ url('datasiswa') }}">Andi Pratama</a></td>
+                        <td> <a href="{{ url('raportsiswa') }}"> Andi Pratama</a>
+                        </td>
                         <td>7A</td>
-                        <td>Laki - Laki</td>
-                        <td>Jl. Merdeka No. 12</td>
+                        <td>2025</td>
+                        <td>Mid Semester Ganjil</td>
                     </tr>
                     <tr>
                         <td>2</td>
                         <td>202502</td>
                         <td>Budi Santoso</td>
                         <td>7B</td>
-                        <td>Laki - Laki</td>
-                        <td>Jl. Sudirman No. 45</td>
+                        <td>2025</td>
+                        <td>Mid Semester Ganjil</td>
                     </tr>
                     <tr>
                         <td>3</td>
                         <td>202503</td>
                         <td>Citra Dewi</td>
                         <td>7C</td>
-                        <td>Laki - Laki</td>
-                        <td>Jl. Diponegoro No. 8</td>
+                        <td>2025</td>
+                        <td>Mid Semester Ganjil</td>
                     </tr>
                     <!-- Jika tidak ada data -->
                     <!--
@@ -88,7 +86,6 @@
         </div>
     </div>
 </div>
-
 
 @endsection
 @section('script')
