@@ -36,7 +36,7 @@ Route::get('/suratizin',[UserController::class,'suratizin']);
 Route::get('/tugas',[UserController::class,'tugas']);
 
 //2E
-Route::get('/penilaian',[UserController::class,'penilaian']);
+Route::get('/penilaian/{nam}', [UserController::class, 'penilaian']);
 
 //2.E.1
 Route::get('/penilaiansiswa',[UserController::class,'penilaiansiswa']);
@@ -45,20 +45,20 @@ Route::get('/penilaiansiswa',[UserController::class,'penilaiansiswa']);
 Route::get('/nilaisiswa',[UserController::class,'nilaisiswa']);
 
 //2.F
-Route::get('/catatankasus',[UserController::class,'catatankasus']);
+Route::get('/catatankasus/{nam}',[UserController::class,'catatankasus']);
 
 //2.F.1
 Route::get('/catatankasussiswa',[UserController::class,'catatankasussiswa']);
 
 //2.G
-Route::get('/jurnalkonseling',[UserController::class,'jurnalkonseling']);
+Route::get('/jurnalkonseling/{nam}',[UserController::class,'jurnalkonseling']);
 
 //2.G.1
 Route::get('/jurnalkonselingsiswa',[UserController::class,'jurnalkonselingsiswa']);
 
 
 //2.H
-Route::get('/raport',[UserController::class,'raport']);
+Route::get('/raport/{nam}',[UserController::class,'raport']);
 
 //2.H.1
 Route::get('/raportsiswa',[UserController::class,'raportsiswa']);

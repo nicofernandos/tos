@@ -24,6 +24,8 @@
     <link rel="stylesheet" href="{{ asset('adminasset/assets/vendor/css/theme-default.css') }}" class="template-customizer-theme-css" />
     <link rel="stylesheet" href="{{ asset('adminasset/assets/css/demo.css') }}" />
 
+     <link rel="stylesheet"
+        href="{{ asset('assets/admin/assets/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css') }}">
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="{{ asset('adminasset/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
     <link rel="stylesheet" href="{{ asset('adminasset/assets/vendor/libs/apex-charts/apex-charts.css') }}" />
@@ -194,11 +196,42 @@
     <script src="{{ asset('adminasset/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
     <script src="{{ asset('adminasset/assets/vendor/js/menu.js') }}"></script>
 
+    <script src="{{ asset('assets/admin/assets/DataTables/DataTables-1.10.18/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/assets/DataTables/DataTables-1.10.18/js/dataTables.bootstrap4.min.js') }}">
+    </script>
+    <script src="{{ asset('assets/admin/assets/DataTables/JSZip-2.5.0/jszip.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/assets/DataTables/pdfmake-0.1.36/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/assets/DataTables/pdfmake-0.1.36/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('assets/admin/assets/DataTables/Buttons-1.5.6/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/assets/DataTables/Buttons-1.5.6/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/assets/DataTables/Buttons-1.5.6/js/buttons.colvis.min.js') }}"></script>
+
     <!-- Vendors JS -->
     <script src="{{ asset('adminasset/assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
 
     <!-- Main JS -->
     <script src="{{ asset('adminasset/assets/js/main.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            var table = $('#table').DataTable({
+                buttons: ['csv', 'print', 'excel', 'pdf'],
+                dom: "<'row'<'col-md-3'l><'col-md-5'B><'col-md-4'f>>" +
+                    "<'row'<'col-md-12'tr>>" +
+                    "<'row'<'col-md-5'i><'col-md-7'p>>",
+                lengthMenu: [
+                    [5, 10, 25, 50, 100, -1],
+                    [5, 10, 25, 50, 100, "ALL"]
+                ],
+                pageLength: 10, // ✅ default 10 rows
+                ordering: false
+            });
+
+            table.buttons().container()
+                .appendTo('#table_wrapper .col-md-5:eq(0)');
+        });
+    </script>
+
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const toggleButton = document.getElementById('toggleSidebar');

@@ -99,7 +99,7 @@
         <div class="card-body">
             @if(isset($siswa) && $siswa->count() > 0)
                 <div class="table-responsive text-nowrap">
-                    <table id="siswaTable" class="table table-striped table-bordered dt-responsive nowrap w-100">
+                    <table id="table" class="table table-striped table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -111,9 +111,10 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <?php $no = 1; ?>
                             @foreach ($siswa as $k)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $no++ }}</td>
                                 <td>{{ $k->nis ?? '-' }}</td>
                                 <td>{{ $k->nisn ?? '-' }}</td>
                                 <td>
@@ -148,21 +149,4 @@
 @endsection
 
 @section('script')
-<script>
-    $(document).ready(function() {
-        @if(isset($siswa) && $siswa->count() > 0)
-            $('#siswaTable').DataTable({
-                responsive: true,
-                pageLength: 25,
-                language: {
-                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/id.json'
-                },
-                order: [[1, 'asc']], // Sort by NIS
-                columnDefs: [
-                    { orderable: false, targets: [0] } // No sorting on number column
-                ]
-            });
-        @endif
-    });
-</script>
 @endsection

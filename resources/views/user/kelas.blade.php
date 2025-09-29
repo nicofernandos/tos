@@ -194,7 +194,7 @@
 
 
         <div class="col-6 col-md-4 col-lg-3">
-            <a href="{{ url('penilaian') }}" class="card menu-card d-block p-4">
+            <a href="{{ url('penilaian/'.$isikelas->nam) }}" class="card menu-card d-block p-4">
                 <div class="text-center">
                     <i class="bx bx-trophy menu-icon"></i>
                     <h5 class="menu-title">Penilaian</h5>
@@ -203,7 +203,7 @@
         </div>
 
         <div class="col-6 col-md-4 col-lg-3">
-            <a href="{{ url('catatankasus') }}" class="card menu-card d-block p-4">
+            <a href="{{ url('catatankasus/'.$isikelas->nam) }}" class="card menu-card d-block p-4">
                 <div class="text-center">
                     <i class="bx bx-note menu-icon"></i>
                     <h5 class="menu-title">Catatan Kasus</h5>
@@ -212,7 +212,7 @@
         </div>
 
         <div class="col-6 col-md-4 col-lg-3">
-            <a href="{{ url('jurnalkonseling') }}" class="card menu-card d-block p-4">
+            <a href="{{ url('jurnalkonseling/'.$isikelas->nam) }}" class="card menu-card d-block p-4">
                 <div class="text-center">
                     <i class="bx bx-chat menu-icon"></i>
                     <h5 class="menu-title">Jurnal Konseling</h5>
@@ -222,7 +222,7 @@
 
 
         <div class="col-6 col-md-4 col-lg-3">
-            <a href="{{ url('raport') }}" class="card menu-card d-block p-4">
+            <a href="{{ url('raport/'.$isikelas->nam) }}" class="card menu-card d-block p-4">
                 <div class="text-center">
                     <i class="bx bx-medal menu-icon"></i>
                     <h5 class="menu-title">Rapor</h5>

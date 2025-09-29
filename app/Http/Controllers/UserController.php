@@ -33,8 +33,9 @@ class UserController extends Controller
     }
 
     public function siswa($nam){
-        $siswa = Tsiswa::where('kel',$nam)->get();  
-        return view('user.siswa', compact('siswa'));
+        $siswa = Tsiswa::where('kel',$nam)->get(); 
+        $isikelas = Tkelas::where('nam',$nam)->first();
+        return view('user.siswa', compact('siswa','isikelas'));
     }
 
     public function datasiswa(){
@@ -53,8 +54,10 @@ class UserController extends Controller
         return view('user.tugas');
     }
 
-    public function penilaian(){
-        return view('user.penilaian');
+    public function penilaian($nam){
+        $siswa = Tsiswa::where('kel',$nam)->get(); 
+        $isikelas = Tkelas::where('nam',$nam)->first();
+        return view('user.penilaian',compact('siswa','isikelas'));
     }
 
     public function penilaiansiswa(){
@@ -65,24 +68,40 @@ class UserController extends Controller
         return view('user.nilaisiswa');
     }
 
-    public function catatankasus(){
-        return view('user.catatankasus');
+    public function catatankasus($nam){
+        $siswa = Tsiswa::with('detail')
+        ->where('kel',$nam)
+        ->get();
+
+        $isisiswa = Tkelas::where('nam',$nam)->first();
+        return view('user.catatankasus',compact('siswa','isikelas'));
     }
 
     public function catatankasussiswa(){
         return view('user.catatankasussiswa');
     }
 
-    public function jurnalkonseling(){
-        return view('user.jurnalkonseling');
+    public function jurnalkonseling($nam){
+        $siswa = Tsiswa::with('detail')
+        ->where('kel',$nam)
+        ->get();
+
+        $isikelas = Tkelas::where('nam',$nam)->first();
+        return view('user.jurnalkonseling',compact('siswa','isikelas'));
     }
     
     public function jurnalkonselingsiswa(){
         return view('user.jurnalkonselingsiswa');
     }
 
-    public function raport(){
-        return view('user.raport');
+    public function raport($nam){
+        $siswa = Tsiswa::with('detail')
+        ->where('kel',$nam)
+        ->get();
+
+        $isikelas = Tkelas::where('nam',$nam)->first();
+
+        return view('user.raport',compact('siswa','isikelas'));
     }
 
     public function raportsiswa(){

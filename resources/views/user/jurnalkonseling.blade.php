@@ -6,7 +6,7 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <a href="{{ url('kelas') }}" class="btn back-btn">
+                <a href="{{ url('kelas/'.$isikelas->id) }}" class="btn back-btn">
                     <i class="bx bx-arrow-back me-1"></i> Kembali
                 </a>
             </div>
@@ -37,51 +37,31 @@
   </div>
     <div class="card-body">
         <div class="table-responsive text-nowrap">
-            <table id="siswaTable" class="table table-striped table-bordered dt-responsive nowrap w-100">
+            <table id="table" class="table table-striped table-bordered dt-responsive nowrap w-100">
                 <thead>
                     <tr>
                         <th>No</th>
                         <th>NIS</th>
+                        <th>NISN</th>
                         <th>Nama Siswa</th>
                         <th>Kelas</th>
-                        <th>Jenis Kelamin</th>
-                        <th>Alamat</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <!-- Contoh data statis -->
+                 <tbody>
+                    <?php $no = 1;  ?>
+                    @foreach ($siswa as $q )
                     <tr>
-                        <td>1</td>
-                        <td>202501</td>
+                        <td>{{ $no++ }}</td>
+                        <td>{{ $q->nis  ?? '-' }}</td>
+                        <td>{{ $q->nisn ?? '-' }}</td>
                         <td>
-                           <a href="{{ url('jurnalkonselingsiswa') }}">Andi Pratam</a>
+                            <a href="{{ url('catatankasussiwa/' . $q->id) }}" class="student-link">
+                                {{ $q->namlen ?? 'Nama tidak tersedia' }}
+                            </a>
                         </td>
-                        <td>7A</td>
-                        <td>Laki - Laki</td>
-                        <td>Jl. Merdeka No. 12</td>
+                        <td> {{ $q->kel  }} </td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>202502</td>
-                        <td>Budi Santoso</td>
-                        <td>7B</td>
-                        <td>Laki - Laki</td>
-                        <td>Jl. Sudirman No. 45</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>202503</td>
-                        <td>Citra Dewi</td>
-                        <td>7C</td>
-                        <td>Laki - Laki</td>
-                        <td>Jl. Diponegoro No. 8</td>
-                    </tr>
-                    <!-- Jika tidak ada data -->
-                    <!--
-                    <tr>
-                        <td colspan="6" class="text-center">Belum ada data siswa</td>
-                    </tr>
-                    -->
+                    @endforeach
                 </tbody>
             </table>
         </div>

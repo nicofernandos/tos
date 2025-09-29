@@ -6,7 +6,7 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <a href="{{ url('kelas') }}" class="btn back-btn">
+                <a href="{{ url('kelas/'.$isikelas->id) }}" class="btn back-btn">
                     <i class="bx bx-arrow-back me-1"></i> Kembali
                 </a>
             </div>
@@ -36,12 +36,14 @@
       </a> --}}
   </div>
     <div class="card-body">
+        @if(isset($siswa) && $siswa->count() > 0 )
         <div class="table-responsive text-nowrap">
-            <table id="siswaTable" class="table table-striped table-bordered dt-responsive nowrap w-100">
+            <table id="table" class="table table-striped table-bordered dt-responsive nowrap w-100">
                 <thead>
                     <tr>
                         <th>No</th>
                         <th>NIS</th>
+                        <th>NISN</th>
                         <th>Nama Siswa</th>
                         <th>Kelas</th>
                         <th>Tahun Ajaran </th>
@@ -49,41 +51,30 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Contoh data statis -->
-                    <tr>
-                        <td>1</td>
-                        <td>202501</td>
-                        <td> <a href="{{ url('raportsiswa') }}"> Andi Pratama</a>
-                        </td>
-                        <td>7A</td>
-                        <td>2025</td>
-                        <td>Mid Semester Ganjil</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>202502</td>
-                        <td>Budi Santoso</td>
-                        <td>7B</td>
-                        <td>2025</td>
-                        <td>Mid Semester Ganjil</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>202503</td>
-                        <td>Citra Dewi</td>
-                        <td>7C</td>
-                        <td>2025</td>
-                        <td>Mid Semester Ganjil</td>
-                    </tr>
-                    <!-- Jika tidak ada data -->
-                    <!--
-                    <tr>
-                        <td colspan="6" class="text-center">Belum ada data siswa</td>
-                    </tr>
-                    -->
+                    <?php $no = 1; ?>
+                    @foreach ($siswa as $key)
+                        <tr>
+                            <td>
+                            {{ $no++ }}
+                            </td>
+                            <td> {{$key->nis}} </td>
+                            <td> {{$key->nisn}} </td>
+                            <td> {{$key->namlen}} </td>
+                            <td> {{$key->kel}} </td>
+                            <td> 2025 </td>
+                            <td> Mid Semester Ganjil </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
+        @else 
+        <div class="text-center py-5">
+            <i class="bx bx-user-x" style="font-size: 4rem; color: #6c757d;"></i>
+            <h4 class="mt-3 text-muted">Belum ada data siswa</h4>
+            <p class="text-muted">Data siswa untuk kelas ini belum tersedia.</p>
+        </div>
+        @endif
     </div>
 </div>
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tsiswa extends Model
 {
-    protected $connection = 'maidatmaspusat'; // Diperbaiki dari $connetion ke $connection
+    protected $connection = 'maidatmaspusat';
     protected $table = 'Tsiswa';
     protected $primaryKey = 'id';
     public $timestamps = false;
@@ -23,4 +23,10 @@ class Tsiswa extends Model
         'rev',
         'kel',
     ]; 
+
+    public function detail()
+    {
+        return $this->hasOne(Tsiswa1::class, 'ids','id');
+    }
+
 }
