@@ -207,7 +207,7 @@
                         <h1 class="student-name">{{ $detailsiswa->namlen }}</h1>
                         <div class="student-id">NIS: {{$detailsiswa->nis}} </div>
                         <div class="student-id mt-2">NISN: {{$detailsiswa->nisn}} </div>
-                        <p class="mb-2 mt-2">Siswa Kelas {{$detailsiswa->kel}} - {{$detailsiswa->tahunajaran->nam}} </p>
+                        <p class="mb-2 mt-2">Siswa Kelas {{$detailsiswa->kel}} - {{ $detailsiswa->kelas->tahunajaran->nam }} </p>
                     </div>
                     {{-- <div class="col-md-3 text-center text-md-end mt-3 mt-md-0">
                         <span class="status-badge">
