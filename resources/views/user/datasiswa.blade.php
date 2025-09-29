@@ -181,7 +181,7 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <a href="{{ url('siswa') }}" class="btn back-btn">
+                <a href="{{ url('siswa/'.$namakelas) }}" class="btn back-btn">
                     <i class="bx bx-arrow-back me-2"></i> Kembali ke Daftar Siswa
                 </a>
             </div>
@@ -194,12 +194,20 @@
             <div class="profile-header">
                 <div class="row align-items-center">
                     <div class="col-md-3 text-center text-md-start">
-                        <img src="https://via.placeholder.com/120x120/667eea/ffffff?text=AP" alt="Foto Siswa" class="profile-photo">
+                        @if ($detailsiswa->detailsiswa && isset($detailsiswa->detailsiswa->img_base64))
+                            <img src="data:image/jpeg;base64,{{ $detailsiswa->detailsiswa->img_base64 }}" 
+                                alt="Foto Siswa" 
+                                class="img-fluid rounded rounded-sm" 
+                                style="max-width: 200px; height: auto;">
+                        @else
+                           <img src="{{ asset('foto/noprof.jpg') }}" alt="Foto Siswa" class="img-fluid rounded rounded-lg" style="max-width: 200px; height:auto;">   
+                        @endif
                     </div>
                     <div class="col-md-6 text-center text-md-start mt-3 mt-md-0">
-                        <h1 class="student-name">Andi Pratama</h1>
-                        <div class="student-id">NIS: 202501</div>
-                        <p class="mb-2 mt-2">Siswa Kelas 7A - Tahun Ajaran 2024/2025</p>
+                        <h1 class="student-name">{{ $detailsiswa->namlen }}</h1>
+                        <div class="student-id">NIS: {{$detailsiswa->nis}} </div>
+                        <div class="student-id mt-2">NISN: {{$detailsiswa->nisn}} </div>
+                        <p class="mb-2 mt-2">Siswa Kelas {{$detailsiswa->kel}} - {{$detailsiswa->tahunajaran->nam}} </p>
                     </div>
                     {{-- <div class="col-md-3 text-center text-md-end mt-3 mt-md-0">
                         <span class="status-badge">
@@ -240,7 +248,7 @@
         </div>
     </div> --}}
 
-    <div class="row">
+    <div class="row mt-4">
         <!-- Data Personal -->
         <div class="col-md-6 mb-4">
             <div class="card info-card">
@@ -252,31 +260,42 @@
                         <div class="info-row">
                             <div class="row">
                                 <div class="col-5"><span class="info-label">Nama Lengkap</span></div>
-                                <div class="col-7"><span class="info-value">Andi Pratama Wijaya</span></div>
+                                <div class="col-7"><span class="info-value"> {{$detailsiswa->namlen}} </span></div>
                             </div>
                         </div>
                         <div class="info-row">
                             <div class="row">
                                 <div class="col-5"><span class="info-label">NISN</span></div>
-                                <div class="col-7"><span class="info-value">1234567890</span></div>
+                                <div class="col-7"><span class="info-value"> {{$detailsiswa->nisn}} </span></div>
                             </div>
                         </div>
                         <div class="info-row">
                             <div class="row">
                                 <div class="col-5"><span class="info-label">Tempat Lahir</span></div>
-                                <div class="col-7"><span class="info-value">Palembang</span></div>
+                                <div class="col-7"><span class="info-value"> {{$detailsiswa->temlah ?? '-'}} </span></div>
                             </div>
                         </div>
                         <div class="info-row">
                             <div class="row">
                                 <div class="col-5"><span class="info-label">Tanggal Lahir</span></div>
-                                <div class="col-7"><span class="info-value">15 Januari 2010</span></div>
+                                <div class="col-7"><span class="info-value">   {{ \Carbon\Carbon::parse($detailsiswa->tgllah)->format('d/m/Y') }} </span></div>
                             </div>
                         </div>
                         <div class="info-row">
                             <div class="row">
                                 <div class="col-5"><span class="info-label">Jenis Kelamin</span></div>
-                                <div class="col-7"><span class="info-value">Laki-laki</span></div>
+                                    <div class="col-7">
+                                        <span class="info-value">
+                                            @if ($detailsiswa->jenkel == 1)
+                                                Laki - Laki
+                                            @elseif ($detailsiswa->jenkel == 2)
+                                                Perempuan
+                                            @else
+                                                -
+                                            @endif
+                                        </span>
+                                    </div>
+
                             </div>
                         </div>
                         <div class="info-row">
@@ -301,10 +320,10 @@
                         <div class="info-row">
                             <div class="row">
                                 <div class="col-5"><span class="info-label">Alamat</span></div>
-                                <div class="col-7"><span class="info-value">Jl. Merdeka No. 12, RT 03/RW 05</span></div>
+                                <div class="col-7"><span class="info-value"> {{ $detailsiswa->detail->ala }} </span></div>
                             </div>
                         </div>
-                        <div class="info-row">
+                        {{-- <div class="info-row">
                             <div class="row">
                                 <div class="col-5"><span class="info-label">Kelurahan</span></div>
                                 <div class="col-7"><span class="info-value">Bukit Baru</span></div>
@@ -315,19 +334,19 @@
                                 <div class="col-5"><span class="info-label">Kecamatan</span></div>
                                 <div class="col-7"><span class="info-value">Ilir Barat I</span></div>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="info-row">
                             <div class="row">
                                 <div class="col-5"><span class="info-label">No. Telepon</span></div>
-                                <div class="col-7"><span class="info-value">0812-3456-7890</span></div>
+                                <div class="col-7"><span class="info-value"> {{$detailsiswa->tel}} </span></div>
                             </div>
                         </div>
-                        <div class="info-row">
+                        {{-- <div class="info-row">
                             <div class="row">
                                 <div class="col-5"><span class="info-label">Email</span></div>
                                 <div class="col-7"><span class="info-value">andi.pratama@student.sch.id</span></div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -335,111 +354,69 @@
     </div>
 
     <div class="row">
-        <!-- Data Orang Tua -->
-        <div class="col-md-6 mb-4">
+        <div class="col-12 mb-4">
             <div class="card info-card">
                 <div class="card-header card-header-custom">
                     <h5><i class="bx bx-group"></i>Data Orang Tua</h5>
                 </div>
-                <div class="card-body p-0">
-                    <div class="p-3">
-                        <h6 class="text-primary mb-3">Data Ayah</h6>
-                        <div class="info-row">
-                            <div class="row">
-                                <div class="col-5"><span class="info-label">Nama Ayah</span></div>
-                                <div class="col-7"><span class="info-value">Budi Pratama</span></div>
-                            </div>
-                        </div>
-                        <div class="info-row">
-                            <div class="row">
-                                <div class="col-5"><span class="info-label">Pekerjaan</span></div>
-                                <div class="col-7"><span class="info-value">Pegawai Swasta</span></div>
-                            </div>
-                        </div>
-                        <div class="info-row">
-                            <div class="row">
-                                <div class="col-5"><span class="info-label">No. Telepon</span></div>
-                                <div class="col-7"><span class="info-value">0811-2345-6789</span></div>
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Data Ayah -->
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <div class="p-3">
+                                <h6 class="text-primary mb-3">Data Ayah</h6>
+                                <div class="info-row">
+                                    <div class="row">
+                                        <div class="col-5"><span class="info-label">Nama Ayah</span></div>
+                                        <div class="col-7"><span class="info-value">Budi Pratama</span></div>
+                                    </div>
+                                </div>
+                                <div class="info-row">
+                                    <div class="row">
+                                        <div class="col-5"><span class="info-label">Pekerjaan</span></div>
+                                        <div class="col-7"><span class="info-value">Pegawai Swasta</span></div>
+                                    </div>
+                                </div>
+                                <div class="info-row">
+                                    <div class="row">
+                                        <div class="col-5"><span class="info-label">No. Telepon</span></div>
+                                        <div class="col-7"><span class="info-value">0811-2345-6789</span></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         
-                        <h6 class="text-primary mb-3 mt-4">Data Ibu</h6>
-                        <div class="info-row">
-                            <div class="row">
-                                <div class="col-5"><span class="info-label">Nama Ibu</span></div>
-                                <div class="col-7"><span class="info-value">Sari Dewi</span></div>
-                            </div>
-                        </div>
-                        <div class="info-row">
-                            <div class="row">
-                                <div class="col-5"><span class="info-label">Pekerjaan</span></div>
-                                <div class="col-7"><span class="info-value">Ibu Rumah Tangga</span></div>
-                            </div>
-                        </div>
-                        <div class="info-row">
-                            <div class="row">
-                                <div class="col-5"><span class="info-label">No. Telepon</span></div>
-                                <div class="col-7"><span class="info-value">0812-9876-5432</span></div>
+                        <!-- Data Ibu -->
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <div class="p-3">
+                                <h6 class="text-primary mb-3">Data Ibu</h6>
+                                <div class="info-row">
+                                    <div class="row">
+                                        <div class="col-5"><span class="info-label">Nama Ibu</span></div>
+                                        <div class="col-7"><span class="info-value">Sari Dewi</span></div>
+                                    </div>
+                                </div>
+                                <div class="info-row">
+                                    <div class="row">
+                                        <div class="col-5"><span class="info-label">Pekerjaan</span></div>
+                                        <div class="col-7"><span class="info-value">Ibu Rumah Tangga</span></div>
+                                    </div>
+                                </div>
+                                <div class="info-row">
+                                    <div class="row">
+                                        <div class="col-5"><span class="info-label">No. Telepon</span></div>
+                                        <div class="col-7"><span class="info-value">0812-9876-5432</span></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Informasi Akademik -->
-        {{-- <div class="col-md-6 mb-4">
-            <div class="card info-card">
-                <div class="card-header card-header-custom">
-                    <h5><i class="bx bx-book"></i>Informasi Akademik</h5>
-                </div>
-                <div class="card-body p-0">
-                    <div class="p-3">
-                        <div class="info-row">
-                            <div class="row">
-                                <div class="col-5"><span class="info-label">Kelas</span></div>
-                                <div class="col-7"><span class="info-value">7A</span></div>
-                            </div>
-                        </div>
-                        <div class="info-row">
-                            <div class="row">
-                                <div class="col-5"><span class="info-label">Tahun Masuk</span></div>
-                                <div class="col-7"><span class="info-value">2024</span></div>
-                            </div>
-                        </div>
-                        <div class="info-row">
-                            <div class="row">
-                                <div class="col-5"><span class="info-label">Wali Kelas</span></div>
-                                <div class="col-7"><span class="info-value">Bu Lisa Permata, S.Pd</span></div>
-                            </div>
-                        </div>
-                        <div class="info-row">
-                            <div class="row">
-                                <div class="col-5"><span class="info-label">Semester</span></div>
-                                <div class="col-7"><span class="info-value">3 (Ganjil)</span></div>
-                            </div>
-                        </div>
-                        
-                        <div class="academic-info mt-3">
-                            <h6 class="mb-2"><i class="bx bx-trophy text-warning me-2"></i>Prestasi Akademik</h6>
-                            <div class="info-row">
-                                <div class="row">
-                                    <div class="col-5"><span class="info-label">Ranking Kelas</span></div>
-                                    <div class="col-7"><span class="info-value">5 dari 30 siswa</span></div>
-                                </div>
-                            </div>
-                            <div class="info-row">
-                                <div class="row">
-                                    <div class="col-5"><span class="info-label">Mata Pelajaran Favorit</span></div>
-                                    <div class="col-7"><span class="info-value">Matematika</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
     </div>
+
+
 </div>
 
 @endsection

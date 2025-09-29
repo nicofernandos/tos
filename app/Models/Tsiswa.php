@@ -29,4 +29,14 @@ class Tsiswa extends Model
         return $this->hasOne(Tsiswa1::class, 'ids','id');
     }
 
+    public function detailsiswa()
+    {
+        return $this->hasOne(Tsiswafoto::class,'ids','id');
+    }
+
+    public function kelas()
+    {
+        return $this->belongsTo(Tkelas::class, 'kel', 'nam');
+    }
+
 }

@@ -24,7 +24,7 @@ Route::get('/kelas/{id}',[UserController::class,'kelas']);
 Route::get('/siswa/{nam}',[UserController::class,'siswa']);
 
 //2.A.1
-Route::get('/datasiswa',[UserController::class,'datasiswa']);
+Route::get('/datasiswa/{id}',[UserController::class,'datasiswa']);
 
 //2B
 Route::get('/absensisiswa',[UserController::class,'absensisiswa']);
@@ -73,5 +73,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 //Auth
 Route::middleware(['isLogin'])->controller(AdminController::class)->group(function () {
+   
     
+
+
 });

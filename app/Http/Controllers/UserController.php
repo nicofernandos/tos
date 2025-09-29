@@ -38,8 +38,17 @@ class UserController extends Controller
         return view('user.siswa', compact('siswa','isikelas'));
     }
 
-    public function datasiswa(){
-        return view('user.datasiswa');
+    public function datasiswa($id){
+        // $detailsiswa = Tsiswa::with('detailsiswa','detail')->findOrFail($id);
+
+        $detailsiswa = Tsiswa::with('detailsiswa', 'detail', 'kelas.tahunajaran')
+                         ->findOrFail($id);
+
+        $namakelas = $detailsiswa->kel;
+        if($detailsiswa->detailsiswa && $detailsiswa->detailsiswa->img){
+            $detailsiswa->detailsiswa->img_base64 = base64_encode($detailsiswa->detailsiswa->img);
+        }
+        return view('user.datasiswa',compact('detailsiswa','namakelas') );
     }
 
     public function absensisiswa(){

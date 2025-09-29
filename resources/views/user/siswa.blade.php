@@ -107,6 +107,7 @@
                                 <th>NISN</th>
                                 <th>Nama Siswa</th>
                                 <th>Tanggal Lahir</th>
+                                <th>Jenis Kelamin</th>
                                 <th>Telepon</th>
                             </tr>
                         </thead>
@@ -127,6 +128,15 @@
                                         {{ \Carbon\Carbon::parse($k->tgllah)->format('d/m/Y') }}
                                     @else
                                         -
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($k->jenkel == 1)
+                                        Laki - Laki
+                                    @elseif ($k->jenkel == 2)
+                                        Perempuan
+                                    @else
+                                    -    
                                     @endif
                                 </td>
                                 <td>{{ $k->tel ?? '-' }}</td>

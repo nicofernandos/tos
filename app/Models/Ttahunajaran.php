@@ -4,28 +4,29 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tkelas extends Model
+class Ttahunajaran extends Model
 {
     protected $connection = 'maiadminmedan';
-    protected $table = 'Tkelas';
+    protected $table = 'Ttahunajaran';
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $keyType = 'int';
     protected $fillable = [
         'id',
-        'tin',
-        'idta',
         'nam',
-        'jen',
-        'lev',
-        'qty',
-        'idk',
+        'idpre',
+        'tglmul',
+        'tglsel',
+        'ket',
+        'sta',
+        'staakt',
+        'rev'
     ];
 
-    public function tahunajaran()
+    public function kelas()
     {
-        return $this->belongsTo(Ttahunajaran::class, 'idta', 'id');
+        return $this->hasMany(Tkelas::class, 'idta', 'id');
     }
 
 
-} 
+}
