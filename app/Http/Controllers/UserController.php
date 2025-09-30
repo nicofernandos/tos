@@ -52,16 +52,28 @@ class UserController extends Controller
         return view('user.datasiswa',compact('detailsiswa','namakelas') );
     }
 
-    public function absensisiswa(){
-        return view('user.absensisiswa');
+    public function absensisiswa($nam){
+        $siswa = Tsiswa::where('kel', $nam)
+        ->orderBy('namlen','asc')
+        ->get();
+        $isikelas = Tkelas::where('nam',$nam)->first();
+        return view('user.absensisiswa', compact('siswa','isikelas'));
     }
 
-    public function suratizin(){
-        return view('user.suratizin');
+    public function suratizin($nam){
+        $siswa = Tsiswa::where('kel',$nam)
+        ->orderBy('namlen','asc')
+        ->get();
+        $isikelas = Tkelas::where('nam',$nam)->first();
+        return view('user.suratizin',compact('isikelas','siswa') );
     }
 
-    public function tugas(){
-        return view('user.tugas');
+    public function tugas($nam){
+        $siswa = Tsiswa::where('kel',$nam)
+        ->orderBy('namlen','asc')
+        ->get();
+        $isikelas = Tkelas::where('nam',$nam)->first();
+        return view('user.tugas',compact('siswa','isikelas'));
     }
 
     public function penilaian($nam){
@@ -82,8 +94,8 @@ class UserController extends Controller
         $siswa = Tsiswa::with('detail')
         ->where('kel',$nam)
         ->get();
-
-        $isisiswa = Tkelas::where('nam',$nam)->first();
+        dd($siswa);
+        $isikelas = Tkelas::where('nam',$nam)->first();
         return view('user.catatankasus',compact('siswa','isikelas'));
     }
 

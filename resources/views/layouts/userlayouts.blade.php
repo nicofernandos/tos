@@ -290,7 +290,7 @@
     @yield('script')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @include('sweetalert::alert')
-    <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/4.25.1/standard/ckeditor.js"></script>
 <script>
     CKEDITOR.replace('deskripsi');
 </script>

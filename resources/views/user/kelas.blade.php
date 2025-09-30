@@ -165,7 +165,7 @@
         </div>
 
         <div class="col-6 col-md-4 col-lg-3">
-            <a href="{{ url('absensisiswa/'.$isikelas->id)}}" class="card menu-card d-block p-4">
+            <a href="{{ url('absensisiswa/'.$isikelas->nam)}}" class="card menu-card d-block p-4">
                 <div class="text-center">
                     <i class="bx bx-check-circle menu-icon"></i>
                     <h5 class="menu-title">Absensi Siswa</h5>
@@ -174,7 +174,7 @@
         </div>
 
         <div class="col-6 col-md-4 col-lg-3">
-            <a href="{{ url('suratizin')  }}" class="card menu-card d-block p-4">
+            <a href="{{ url('suratizin/'.$isikelas->nam)  }}" class="card menu-card d-block p-4">
                 <div class="text-center">
                     <i class="bx bx-file menu-icon"></i>
                     <h5 class="menu-title">Surat Izin Siswa</h5>
@@ -184,7 +184,7 @@
 
     
         <div class="col-6 col-md-4 col-lg-3">
-            <a href="{{ url('tugas') }}" class="card menu-card d-block p-4">
+            <a href="{{ url('tugas/'.$isikelas->nam) }}" class="card menu-card d-block p-4">
                 <div class="text-center">
                     <i class="bx bx-book-content menu-icon"></i>
                     <h5 class="menu-title">Tugas & Proyek</h5>

@@ -22,7 +22,7 @@
                         <img src="{{ asset('foto/sklh.jpeg') }}" class="img-fluid" style="border-radius: 20px; max-height:200px;"  alt="">
                     </div>
                     <div class="col-md-7">
-                        <h1 class="display-4 fw-bold mb-2">Kelas 7A</h1>
+                        <h1 class="display-4 fw-bold mb-2"> {{$isikelas->nam}} </h1>
                         <h3 class="fw-bold mt-1">Daftar Surat Izin Siswa</h3>
                         <p class="text-muted">Surat izin yang diajukan oleh orang tua / wali murid</p>
                     </div>
@@ -50,40 +50,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Contoh data statis -->
-                    <tr>
-                        <td>1</td>
-                        <td>2025-09-17</td>
-                        <td>Andi Pratama</td>
-                        <td>7A</td>
-                        <td>Pak Budi</td>
-                        <td>Sakit demam, disarankan dokter untuk istirahat 2 hari.</td>
-                        <td><a href="#" class="btn btn-sm btn-info"><i class="bx bx-download"></i> Lihat</a></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>2025-09-16</td>
-                        <td>Citra Dewi</td>
-                        <td>7C</td>
-                        <td>Ibu Sari</td>
-                        <td>Acara keluarga mendesak di luar kota.</td>
-                        <td><a href="#" class="btn btn-sm btn-info"><i class="bx bx-download"></i> Lihat</a></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>2025-09-15</td>
-                        <td>Budi Santoso</td>
-                        <td>7B</td>
-                        <td>Pak Joko</td>
-                        <td>Kontrol kesehatan rutin di rumah sakit.</td>
-                        <td><a href="#" class="btn btn-sm btn-info"><i class="bx bx-download"></i> Lihat</a></td>
-                    </tr>
-                    <!-- Jika tidak ada data -->
-                    <!--
+                    @if (isset($siswa) && $siswa->count() > 0 )
+                        <?php $no = 1 ?>
+                        @foreach ($siswa as $k )              
+                        <tr>
+                            <td> {{$no++}} </td>
+                            <td>2025-09-17</td>
+                            <td> {{$k->namlen}} </td>
+                            <td> {{ $k->kel }} </td>
+                            <td>Pak Budi</td>
+                            <td>Sakit demam, disarankan dokter untuk istirahat 2 hari.</td>
+                            <td><a href="#" class="btn btn-sm btn-info"><i class="bx bx-download"></i> Lihat</a></td>
+                        </tr>
+                        @endforeach
+                    @else
                     <tr>
                         <td colspan="7" class="text-center">Belum ada surat izin</td>
                     </tr>
-                    -->
+                    @endif
                 </tbody>
             </table>
         </div>

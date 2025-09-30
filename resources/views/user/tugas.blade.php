@@ -1,6 +1,9 @@
 @extends('layouts.userlayouts')
 @section('title','Tambah Tugas & Proyek')
 @section('content')
+@section('styles')
+
+@endsection
 
 <div class="container-fluid px-4">
     <div class="row mb-4">
@@ -17,7 +20,7 @@
                         <img src="{{ asset('foto/sklh.jpeg') }}" class="img-fluid" style="border-radius: 20px; max-height:200px;"  alt="">
                     </div>
                     <div class="col-md-7">
-                        <h1 class="display-4 fw-bold mb-2">Kelas 7A</h1>
+                        <h1 class="display-4 fw-bold mb-2">Kelas {{$isikelas->nam}} </h1>
                         <h3 class="display-4 fw-bold mt-1">Tugas dan Proyek</h3>
                     </div>
                 </div>
@@ -74,7 +77,7 @@
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label">Deskripsi</label>
             <div class="col-sm-10">
-              <textarea name="deskripsi" class="form-control" rows="3" placeholder="Deskripsi tugas atau proyek"></textarea>
+              <textarea id="deskripsi" name="deskripsi" class="form-control" rows="3" placeholder="Deskrsipsi tugas atau proyek" ></textarea> 
             </div>
           </div>
 

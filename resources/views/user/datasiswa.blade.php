@@ -158,6 +158,7 @@
     margin: 1rem 0;
 }
 
+
 @media (max-width: 768px) {
     .profile-header {
         padding: 1.5rem;
@@ -177,11 +178,11 @@
 </style>
 @endsection
 
-<div class="container-fluid px-4">
+<div class="container-fluid px-4 card">
     <div class="row mb-4">
         <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <a href="{{ url('siswa/'.$namakelas) }}" class="btn back-btn">
+            <div class="d-flex justify-content-between align-items-center mb-3 mt-2 px-2 py-3">
+                <a href="{{ url('siswa/'.$namakelas) }}" class="btn btn-danger back-btn">
                     <i class="bx bx-arrow-back me-2"></i> Kembali ke Daftar Siswa
                 </a>
             </div>
@@ -310,8 +311,8 @@
         </div>
 
         <!-- Informasi Kontak -->
-        <div class="col-md-6 mb-4">
-            <div class="card info-card">
+        <div class="col-md-6 mb- carder">
+            <div class="card info-card" style="height: 253px;">
                 <div class="card-header card-header-custom">
                     <h5><i class="bx bx-phone"></i>Informasi Kontak</h5>
                 </div>
@@ -353,7 +354,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row mt-2">
         <div class="col-12 mb-4">
             <div class="card info-card">
                 <div class="card-header card-header-custom">

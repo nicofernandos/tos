@@ -62,33 +62,33 @@
 
 @section('content')
 <div class="container-fluid px-4">
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <a href="{{ url('sekolah') }}" class="btn back-btn">
-                    <i class="bx bx-arrow-back me-1"></i> Kembali
-                </a>
-            </div>
-            
-            <div class="class-header">
-                <div class="row align-items-center">
-                    <div class="col-md-5 my-2">
-                        <img src="{{ asset('foto/sklh.jpeg') }}" class="img-fluid" style="border-radius: 20px; max-height:200px;" alt="Foto Sekolah">
-                    </div>
-                    <div class="col-md-7">
-                        @if(isset($siswa) && $siswa->count() > 0)
-                            <h1 class="display-4 fw-bold mb-2">{{ $siswa->first()->kel ?? 'Kelas' }}</h1>
-                        @else
-                            <h1 class="display-4 fw-bold mb-2">Data Siswa</h1>
-                        @endif
-                        <h3 class="display-5 fw-bold mt-1">Total: {{ isset($siswa) ? $siswa->count() : 0 }} Siswa</h3>
+    <div class="card px-2 py-3">       
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <a href="{{ url('sekolah') }}" class="btn btn-danger back-btn">
+                        <i class="bx bx-arrow-back me-1"></i> Kembali
+                    </a>
+                </div>
+                
+                <div class="class-header">
+                    <div class="row align-items-center">
+                        <div class="col-md-5 my-2">
+                            <img src="{{ asset('foto/sklh.jpeg') }}" class="img-fluid" style="border-radius: 20px; max-height:200px;" alt="Foto Sekolah">
+                        </div>
+                        <div class="col-md-7">
+                            @if(isset($siswa) && $siswa->count() > 0)
+                                <h1 class="display-4 fw-bold mb-2">{{ $siswa->first()->kel ?? 'Kelas' }}</h1>
+                            @else
+                                <h1 class="display-4 fw-bold mb-2">Data Siswa</h1>
+                            @endif
+                            <h3 class="display-5 fw-bold mt-1">Total: {{ isset($siswa) ? $siswa->count() : 0 }} Siswa</h3>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="card">
         <h5 class="card-header">
             <i class="bx bx-group me-2"></i>Data Siswa
             @if(isset($siswa) && $siswa->count() > 0)

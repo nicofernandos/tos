@@ -162,7 +162,7 @@
                         <img src="{{ asset('foto/sklh.jpeg') }}" class="img-fluid" style="border-radius: 20px; max-height:200px;" alt="">
                     </div>
                     <div class="col-md-7">
-                        <h1 class="display-4 fw-bold mb-2">Kelas 7A</h1>
+                        <h1 class="display-4 fw-bold mb-2"> {{ $isikelas->nam }} </h1>
                         <h3 class="display-4 fw-bold mt-1">Absensi Siswa</h3>
                         <p class="lead mb-0">Tahun Ajaran 2024/2025 • Semester Genap</p>
                     </div>
@@ -203,12 +203,13 @@
       </form>
 
       <!-- Table -->
-      <div class="table-responsive text-nowrap">
-          <table class="table table-bordered">
+      <div class="table-responsive text-nowrap w-100">
+          <table id="table" class="table table-bordered dt-responsive nowrap w-100">
               <thead>
                   <tr>
                       <th>No</th>
                       <th>NIS</th>
+                      <th>NISN</th>
                       <th>Nama Siswa</th>
                       <th>Kelas</th>
                       <th>Tanggal</th>
@@ -217,34 +218,31 @@
                   </tr>
               </thead>
               <tbody>
-                  <!-- Data statis -->
-                  <tr>
-                      <td>1</td>
-                      <td>202501</td>
-                      <td>Andi Pratama</td>
-                      <td>7A</td>
-                      <td>2025-09-18</td>
-                      <td>Hadir</td>
-                      <td>-</td>
-                  </tr>
-                  <tr>
-                      <td>2</td>
-                      <td>202502</td>
-                      <td>Budi Santoso</td>
-                      <td>7B</td>
-                      <td>2025-09-18</td>
-                      <td>Izin</td>
-                      <td>Sakit</td>
-                  </tr>
-                  <tr>
-                      <td>3</td>
-                      <td>202503</td>
-                      <td>Citra Dewi</td>
-                      <td>7C</td>
-                      <td>2025-09-18</td>
-                      <td>Alpha</td>
-                      <td>Tidak ada keterangan</td>
-                  </tr>
+                @if(isset($siswa) && $siswa->count() > 0 )
+                    <?php $no = 1 ?>
+                    @foreach ($siswa as $k )
+                        <tr>
+                            <td> {{$no++}} </td>
+                            <td> {{$k->nis}} </td>
+                            <td> {{$k->nisn}} </td>
+                            <td> {{$k->namlen}} </td>
+                            <td> {{ $k->kel }} </td>
+                            <td>2025-09-18</td>
+                            <td>Hadir</td>
+                            <td>-</td>
+                        </tr>
+                    @endforeach
+                @else 
+                <tr>
+                    <td>
+                        <div class="text-center py-5">
+                            <i class="bx bx-user-x" style="font-size: 4rem; color: #6c757d"></i>
+                            <h4 class="mt-3 text-muted">Belum ada siswa untuk kelas ini</h4>
+                            <p class="text-muted">Data siswa untuk kelas ini belum tersedia</p>
+                        </div>
+                    </td>
+                </tr>
+                @endif
               </tbody>
           </table>
       </div>

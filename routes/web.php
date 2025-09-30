@@ -27,13 +27,13 @@ Route::get('/siswa/{nam}',[UserController::class,'siswa']);
 Route::get('/datasiswa/{id}',[UserController::class,'datasiswa']);
 
 //2B
-Route::get('/absensisiswa',[UserController::class,'absensisiswa']);
+Route::get('/absensisiswa/{nam}',[UserController::class,'absensisiswa']);
 
 //2C
-Route::get('/suratizin',[UserController::class,'suratizin']);
+Route::get('/suratizin/{nam}',[UserController::class,'suratizin']);
 
 //2D
-Route::get('/tugas',[UserController::class,'tugas']);
+Route::get('/tugas/{nam}',[UserController::class,'tugas']);
 
 //2E
 Route::get('/penilaian/{nam}', [UserController::class, 'penilaian']);
