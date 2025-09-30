@@ -99,7 +99,7 @@
             <div class="col-6">
               <div class="info-section text-center">
                 <span class="info-label">Total Murid</span>
-                <div class="student-count text-primary"> {{ $k->qty }}  </div>
+                <div class="student-count text-primary"> {{ $k->jumlahsiswa_count}}  </div>
               </div>
             </div>
             <div class="col-6">

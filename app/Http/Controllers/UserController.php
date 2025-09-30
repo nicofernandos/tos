@@ -23,17 +23,19 @@ class UserController extends Controller
 {
 
     public function sekolah(){
-        $kelas = Tkelas::where('tin',4)->where('jen',4)->get();     
+        $kelas = Tkelas::where('tin',4)->where('jen',4)->withCount('jumlahsiswa')->get();
         return view('user.sekolah',compact('kelas'));
     }
 
     public function kelas($id){
-        $isikelas = Tkelas::where('id',$id)->firstOrFail();
+        $isikelas = Tkelas::where('id',$id)->withCount('jumlahsiswa')->firstOrFail();
         return view('user.kelas', compact('isikelas'));
     }
 
     public function siswa($nam){
-        $siswa = Tsiswa::where('kel',$nam)->get(); 
+        $siswa = Tsiswa::where('kel',$nam)
+        ->orderBy('namlen','asc')
+        ->get(); 
         $isikelas = Tkelas::where('nam',$nam)->first();
         return view('user.siswa', compact('siswa','isikelas'));
     }
@@ -43,7 +45,6 @@ class UserController extends Controller
 
         $detailsiswa = Tsiswa::with('detailsiswa', 'detail', 'kelas.tahunajaran')
                          ->findOrFail($id);
-
         $namakelas = $detailsiswa->kel;
         if($detailsiswa->detailsiswa && $detailsiswa->detailsiswa->img){
             $detailsiswa->detailsiswa->img_base64 = base64_encode($detailsiswa->detailsiswa->img);

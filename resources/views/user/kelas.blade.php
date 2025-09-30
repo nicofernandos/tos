@@ -146,7 +146,7 @@
                     </div>
                     <div class="col-md-7">
                         <h1 class="display-4 fw-bold mb-2">Kelas {{ $isikelas->nam }}</h1>
-                        <p class="lead mb-0">{{ $isikelas->qty }} Murid</p>
+                        <p class="lead mb-0">{{ $isikelas->jumlahsiswa_count }} Murid</p>
                         <span class="text-muted">Wali Kelas : Pak Tarno</span>
                     </div>
                 </div>

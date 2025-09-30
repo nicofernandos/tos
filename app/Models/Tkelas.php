@@ -22,6 +22,11 @@ class Tkelas extends Model
         'idk',
     ];
 
+    public function jumlahsiswa()
+    {
+        return $this->hasMany(Tsiswa::class, 'kel', 'nam');
+    }
+
     public function tahunajaran()
     {
         return $this->belongsTo(Ttahunajaran::class, 'idta', 'id');

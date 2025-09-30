@@ -207,7 +207,7 @@
                         <h1 class="student-name">{{ $detailsiswa->namlen }}</h1>
                         <div class="student-id">NIS: {{$detailsiswa->nis}} </div>
                         <div class="student-id mt-2">NISN: {{$detailsiswa->nisn}} </div>
-                        <p class="mb-2 mt-2">Siswa Kelas {{$detailsiswa->kel}} - {{ $detailsiswa->kelas->tahunajaran->nam }} </p>
+                        <p class="mb-2 mt-2">Siswa Kelas {{$detailsiswa->kel}} - Tahun Ajaran {{ $detailsiswa->kelas->tahunajaran->nam }} </p>
                     </div>
                     {{-- <div class="col-md-3 text-center text-md-end mt-3 mt-md-0">
                         <span class="status-badge">
@@ -320,7 +320,7 @@
                         <div class="info-row">
                             <div class="row">
                                 <div class="col-5"><span class="info-label">Alamat</span></div>
-                                <div class="col-7"><span class="info-value"> {{ $detailsiswa->detail->ala }} </span></div>
+                                <div class="col-7"><span class="info-value"> {{ $detailsiswa->detailsiswa->ala ?? 'Tidak ada Alamat' }} </span></div>
                             </div>
                         </div>
                         {{-- <div class="info-row">

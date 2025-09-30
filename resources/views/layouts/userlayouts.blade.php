@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="{{ asset('adminasset/assets/css/demo.css') }}" />
 
      <link rel="stylesheet"
-        href="{{ asset('assets/admin/assets/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css') }}">
+        href="{{ asset('assets/assets/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css') }}">
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="{{ asset('adminasset/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
     <link rel="stylesheet" href="{{ asset('adminasset/assets/vendor/libs/apex-charts/apex-charts.css') }}" />
@@ -196,15 +196,15 @@
     <script src="{{ asset('adminasset/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
     <script src="{{ asset('adminasset/assets/vendor/js/menu.js') }}"></script>
 
-    <script src="{{ asset('assets/admin/assets/DataTables/DataTables-1.10.18/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('assets/admin/assets/DataTables/DataTables-1.10.18/js/dataTables.bootstrap4.min.js') }}">
+    <script src="{{ asset('assets/assets/DataTables/DataTables-1.10.18/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/assets/DataTables/DataTables-1.10.18/js/dataTables.bootstrap4.min.js') }}">
     </script>
-    <script src="{{ asset('assets/admin/assets/DataTables/JSZip-2.5.0/jszip.min.js') }}"></script>
-    <script src="{{ asset('assets/admin/assets/DataTables/pdfmake-0.1.36/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('assets/admin/assets/DataTables/pdfmake-0.1.36/vfs_fonts.js') }}"></script>
-    <script src="{{ asset('assets/admin/assets/DataTables/Buttons-1.5.6/js/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('assets/admin/assets/DataTables/Buttons-1.5.6/js/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('assets/admin/assets/DataTables/Buttons-1.5.6/js/buttons.colvis.min.js') }}"></script>
+    <script src="{{ asset('assets/assets/DataTables/JSZip-2.5.0/jszip.min.js') }}"></script>
+    <script src="{{ asset('assets/assets/DataTables/pdfmake-0.1.36/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('assets/assets/DataTables/pdfmake-0.1.36/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('assets/assets/DataTables/Buttons-1.5.6/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('assets/assets/DataTables/Buttons-1.5.6/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('assets/assets/DataTables/Buttons-1.5.6/js/buttons.colvis.min.js') }}"></script>
 
     <!-- Vendors JS -->
     <script src="{{ asset('adminasset/assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
