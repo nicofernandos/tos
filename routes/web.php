@@ -34,6 +34,7 @@ Route::get('/suratizin/{nam}',[UserController::class,'suratizin']);
 
 //2D
 Route::get('/tugas/{nam}',[UserController::class,'tugas']);
+Route::post('/tugassimpan',[UserController::class,'tugassimpan']);
 
 //2E
 Route::get('/penilaian/{nam}', [UserController::class, 'penilaian']);

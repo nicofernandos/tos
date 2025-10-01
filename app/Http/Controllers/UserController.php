@@ -76,6 +76,13 @@ class UserController extends Controller
         return view('user.tugas',compact('siswa','isikelas'));
     }
 
+    public function tugassimpan(Request $request){
+        $request->validate([
+            'idkelas' => 'required'
+        ])
+
+    }
+
     public function penilaian($nam){
         $siswa = Tsiswa::where('kel',$nam)->get(); 
         $isikelas = Tkelas::where('nam',$nam)->first();

@@ -65,6 +65,41 @@
             </div>
           </div>
 
+          {{-- Tugas Untuk --}}
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Tugas Untuk</label>
+            <div class="col-sm-10">
+                <select class="form-control" name="tugas_for" id="tugasSiswa" required>
+                    <option value="">-- Pilih Tugas Untuk --</option>
+                    <option value="kelas">1 Kelas</option>
+                    <option value="siswa">Anak Tertentu</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row mb-3" id="siswaList" style="display: none;">
+            <label class="col-sm-2 col-form-label">Pilih Siswa</label>
+            <div class="col-sm-10">
+                <div class="row g-3">
+                    @foreach($siswa as $s)
+                        <div class="col-sm-6 col-md-4 col-lg-3">
+                            <div class="card h-100">
+                                <div class="card-body p-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="siswa_ids[]" value="{{ $s->id }}" id="siswa{{ $s->id }}">
+                                        <label class="form-check-label" for="siswa{{ $s->id }}">
+                                            {{ $s->namlen }}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
+
           {{-- Judul Tugas --}}
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label">Judul Tugas</label>
@@ -106,5 +141,15 @@
 @endsection
 
 @section('script')
+
+<script>
+  document.getElementById('tugasSiswa').addEventListener('change',function(){
+    if(this.value === 'siswa'){
+      document.getElementById('siswaList').style.display ='block';
+    }else {
+      document.getElementById('siswaList').style.display = 'none';
+    }
+  });
+</script>
 
 @endsection
