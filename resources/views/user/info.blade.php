@@ -17,7 +17,7 @@
                         <img src="{{ asset('foto/sklh.jpeg') }}" class="img-fluid" style="border-radius: 20px; max-height:200px;"  alt="">
                     </div>
                     <div class="col-md-7">
-                        <h1 class="display-4 fw-bold mb-2">Kelas 7A</h1>
+                        <h1 class="display-4 fw-bold mb-2">Kelas  {{$isikelas->nam}} </h1>
                         <h3 class="display-4 fw-bold mt-1">Informasi</h3>
                     </div>
                 </div>

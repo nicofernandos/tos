@@ -196,7 +196,8 @@ class UserController extends Controller
         return view('user.raportsiswa');
     }
 
-    public function info(){
-        return view('user.info');
+    public function info($nam){
+        $isikelas = Tkelas::where('nam',$nam)->first();
+        return view('user.info',compact('isikelas'));
     }
 }

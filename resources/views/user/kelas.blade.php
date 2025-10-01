@@ -232,7 +232,7 @@
 
     
         <div class="col-6 col-md-4 col-lg-3">
-            <a href="{{ url('info') }}" class="card menu-card d-block p-4">
+            <a href="{{ url('info/'.$isikelas->nam) }}" class="card menu-card d-block p-4">
                 <div class="text-center">
                     <i class="bx bx-info-circle menu-icon"></i>
                     <h5 class="menu-title text-dark">Info</h5>
