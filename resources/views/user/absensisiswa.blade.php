@@ -147,33 +147,34 @@
 </style>
 @endsection
 
-<div class="container-fluid px-4">
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <a href="{{ url('kelas') }}" class="btn back-btn">
-                    <i class="bx bx-arrow-back me-1"></i> Kembali
-                </a>
-            </div>
-            
-            <div class="class-header">
-                <div class="row align-items-center">
-                    <div class="col-md-5 my-2">
-                        <img src="{{ asset('foto/sklh.jpeg') }}" class="img-fluid" style="border-radius: 20px; max-height:200px;" alt="">
-                    </div>
-                    <div class="col-md-7">
-                        <h1 class="display-4 fw-bold mb-2"> {{ $isikelas->nam }} </h1>
-                        <h3 class="display-4 fw-bold mt-1">Absensi Siswa</h3>
-                        <p class="lead mb-0">Tahun Ajaran 2024/2025 • Semester Genap</p>
+<div class="container-fluid px-4 mb-2">
+    <div class="card px-2 py-3">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <a href="{{ url('kelas/'.$isikelas->id) }}" class="btn btn-danger back-btn">
+                        <i class="bx bx-arrow-back me-1"></i> Kembali
+                    </a>
+                </div>
+                
+                <div class="class-header">
+                    <div class="row align-items-center">
+                        <div class="col-md-5 my-2">
+                            <img src="{{ asset('foto/sklh.jpeg') }}" class="img-fluid" style="border-radius: 20px; max-height:200px;" alt="">
+                        </div>
+                        <div class="col-md-7">
+                            <h1 class="display-4 fw-bold mb-2"> {{ $isikelas->nam }} </h1>
+                            <h3 class="display-4 fw-bold mt-1">Absensi Siswa</h3>
+                            <p class="lead mb-0">Tahun Ajaran 2024/2025 • Semester Genap</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
+    </card>
 </div>
 
-<div class="card">
+<div class="card mt-2">
   <div class="card-header d-flex justify-content-between align-items-center">
       <h5 class="mb-0">Absensi Siswa</h5>
       <a href="{{ url('cetaklaporanabsensi', request()->all()) }}" target="_blank" class="btn btn-sm btn-primary">

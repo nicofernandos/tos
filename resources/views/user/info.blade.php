@@ -2,11 +2,11 @@
 @section('title','TOS Info')
 @section('content')
 
-<div class="container-fluid px-4">
+<div class="container-fluid px-4 card">
     <div class="row mb-4">
         <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <a href="{{ url('kelas') }}" class="btn back-btn">
+            <div class="d-flex justify-content-between align-items-center mb-3 mt-2">
+                <a href="{{ url('kelas/'.$isikelas->id) }}" class="btn btn-danger back-btn">
                     <i class="bx bx-arrow-back me-1"></i> Kembali
                 </a>
             </div>
@@ -26,7 +26,7 @@
     </div>
 </div>
 
-<div class="card">
+<div class="card mt-2">
     <h5 class="card-header text-center">Informasi</h5>
     <div class="card-body">
         <div class="row mb-3">

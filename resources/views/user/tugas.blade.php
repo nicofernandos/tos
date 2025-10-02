@@ -7,9 +7,10 @@
 
 <div class="container-fluid px-4">
     <div class="row mb-4">
+      <div class="card px-2 py-3">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <a href="{{ url('kelas') }}" class="btn back-btn">
+                <a href="{{ url('kelas/'.$isikelas->id) }}" class="btn btn-danger back-btn">
                     <i class="bx bx-arrow-back me-1"></i> Kembali
                 </a>
             </div>
@@ -26,6 +27,7 @@
                 </div>
             </div>
         </div>
+      </card>
     </div>
 </div>
 
@@ -109,11 +111,12 @@
           </div>
 
           {{-- Deskripsi --}}
-          <div class="row mb-3">
-            <label class="col-sm-2 col-form-label">Deskripsi</label>
-            <div class="col-sm-10">
-              <textarea id="deskripsi" name="deskripsi" class="form-control" rows="3" placeholder="Deskrsipsi tugas atau proyek" ></textarea> 
-            </div>
+          <div class="row mb-4">
+              <label class="col-sm-2 col-form-label">Deskripsi Informasi</label>
+              <div class="col-sm-10">
+                  <div id="editorDeskripsi"></div>
+                  <textarea name="deskripsi" id="deskripsi" style="display:none;" required></textarea>
+              </div>
           </div>
 
           {{-- Lampiran --}}
@@ -139,10 +142,67 @@
   </div>
 </div>
 @endsection
+<style>
+        .ck-powered-by {
+        display: none !important;
+    }
 
+    .ck-balloon-panel[class*="powered-by"] {
+        display: none !important;
+    }
+
+    .ck-editor__editable {
+        min-height: 200px;
+    }
+</style>
 @section('script')
-
+<script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/ckeditor.js"></script>
 <script>
+      let editors = {};
+
+    document.addEventListener('DOMContentLoaded', function () {
+        function initEditor(divId, textareaId) {
+            ClassicEditor
+                .create(document.querySelector('#' + divId), {
+                    toolbar: [
+                        'heading', '|',
+                        'bold', 'italic', 'link', '|',
+                        'bulletedList', 'numberedList', '|',
+                        'outdent', 'indent', '|',
+                        'blockQuote', 'insertTable', '|',
+                        'undo', 'redo'
+                    ]
+                })
+                .then(editor => {
+                    editors[divId] = editor;
+                    editor.model.document.on('change:data', () => {
+                        document.querySelector('#' + textareaId).value = editor.getData();
+                    });
+                })
+                .catch(error => console.error(error));
+        }
+
+        // Inisialisasi dua editor
+        initEditor('editorDeskripsi', 'deskripsi');
+        initEditor('editorRencana', 'rencana');
+
+        // Sync saat submit
+        const form = document.getElementById('catalogForm');
+        form.addEventListener('submit', function (e) {
+            for (let key in editors) {
+                const editor = editors[key];
+                const textareaId = key === 'editorDeskripsi' ? 'deskripsi' : 'rencana';
+                document.querySelector('#' + textareaId).value = editor.getData();
+
+                if (!editor.getData().trim()) {
+                    e.preventDefault();
+                    alert(textareaId + ' tidak boleh kosong!');
+                    return false;
+                }
+            }
+        });
+    });
+
   document.getElementById('tugasSiswa').addEventListener('change',function(){
     if(this.value === 'siswa'){
       document.getElementById('siswaList').style.display ='block';

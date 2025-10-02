@@ -160,7 +160,6 @@ class UserController extends Controller
         $siswa = Tsiswa::with('detail')
         ->where('kel',$nam)
         ->get();
-        dd($siswa);
         $isikelas = Tkelas::where('nam',$nam)->first();
         return view('user.catatankasus',compact('siswa','isikelas'));
     }

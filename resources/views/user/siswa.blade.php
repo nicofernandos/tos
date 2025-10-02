@@ -66,7 +66,7 @@
         <div class="row mb-4">
             <div class="col-12">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <a href="{{ url('sekolah') }}" class="btn btn-danger back-btn">
+                    <a href="{{ url('kelas/'.$isikelas->id) }}" class="btn btn-danger back-btn">
                         <i class="bx bx-arrow-back me-1"></i> Kembali
                     </a>
                 </div>
