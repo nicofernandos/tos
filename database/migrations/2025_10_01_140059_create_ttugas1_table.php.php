@@ -11,27 +11,26 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('maiadminmedan')->create('Ttugas1', function (Blueprint $table) {
-            $table->bigIncrements('id');
 
-            // Relasi ke Ttugas
-            $table->bigInteger('idtugas')->unsigned();
-            $table->foreign('idtugas')->references('id')->on('Ttugas')->onDelete('cascade');
+        Schema::connection('maiadminmedan')->create('ttugas1', function (Blueprint $table) {
+        $table->unsignedBigInteger('id')->primary(); // PK manual, bukan auto increment
 
-            // Relasi ke Tsiswa
-            $table->bigInteger('idsiswa')->unsigned();
+        $table->unsignedBigInteger('idtugas'); // FK ke ttugas
+        $table->foreign('idtugas')->references('id')->on('ttugas')->onDelete('cascade');
 
-            // Kolom detail
-            $table->enum('status',['belum','sudah'])->default('belum');
-            $table->decimal('nilai',5,2)->nullable();
-            $table->text('catatan')->nullable();
+        $table->unsignedBigInteger('idsiswa'); // FK ke tsiswa (pastikan tsiswa.id juga PK)
+        // $table->foreign('idsiswa')->references('id')->on('tsiswa')->onDelete('cascade');
 
-            // Audit fields
-            $table->timestamp('createat')->nullable();
-            $table->string('createby',50)->nullable();
-            $table->timestamp('updateat')->nullable();
-            $table->string('updateby',50)->nullable();
-        });
+        $table->enum('status', ['belum', 'sudah'])->default('belum');
+        $table->decimal('nilai', 5, 2)->nullable();
+        $table->text('catatan')->nullable();
+
+        $table->timestamp('createat')->nullable();
+        $table->string('createby', 50)->nullable();
+        $table->timestamp('updateat')->nullable();
+        $table->string('updateby', 50)->nullable();
+    });
+
     }
 
     /**
@@ -39,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('Ttugas1');
+        Schema::connection('maiadminmedan')->dropIfExists('ttugas1');
     }
 };

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::connection('maiadminmedan')->create('tinfo', function ($table) {
-            $table->bigIncrements('id');
+            $table->unsignedBigInteger('id')->primary();
 
             $table->bigInteger('idkelas')->unsigned();
             
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('info');
+        Schema::connection('maiadminmedan')->dropIfExists('info');
     }
 };

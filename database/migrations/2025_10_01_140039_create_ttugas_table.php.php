@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('maiadminmedan')->create('Ttugas', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('idkelas')->unsigned();
-            $table->bigInteger('idguru')->unsigned();
+        Schema::connection('maiadminmedan')->create('ttugas', function (Blueprint $table) {
+            $table->unsignedBigInteger('id')->primary();
+            $table->unsignedBigInteger('idkelas')->unsigned();
+            $table->unsignedBigInteger('idguru')->unsigned();
             $table->string('mapel', 100);
             $table->date('tglpenugasan');
             $table->date('tglpengumpulan')->nullable();
@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('Ttugas');
+        Schema::connection('maiadminmedan')->dropIfExists('ttugas');
     }
 };
