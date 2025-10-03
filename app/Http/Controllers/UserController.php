@@ -92,8 +92,6 @@ class UserController extends Controller
             'tugasFor' => 'required|in:kelas,siswa',
             'siswa_ids' => 'array',
         ]);
-
-        // Simpan master tugas
         $tugas = Ttugas::create([
             'idkelas' => $request->idkelas,
             'idguru' => $request->idguru,
@@ -107,11 +105,8 @@ class UserController extends Controller
             'createat' => now(),
             'createby' => auth()->user()->name ?? 'system',
         ]);
-
-        // Kalau untuk seluruh kelas
         if ($request->tugasFor === 'kelas') {
             $siswaList = Tsiswa::where('idkelas', $request->idkelas)->pluck('id');
-
             foreach ($siswaList as $idsiswa) {
                 Ttugas1::create([
                     'idtugas' => $tugas->id,
@@ -124,7 +119,6 @@ class UserController extends Controller
                 ]);
             }
         } 
-        // Kalau untuk siswa tertentu
         elseif ($request->tugasFor === 'siswa' && $request->has('siswa_ids')) {
             foreach ($request->siswa_ids as $idsiswa) {
                 Ttugas1::create([
@@ -155,6 +149,7 @@ class UserController extends Controller
     }
 
     public function nilaisiswa(){
+
         return view('user.nilaisiswa');
     }
 
@@ -166,9 +161,39 @@ class UserController extends Controller
         return view('user.catatankasus',compact('siswa','isikelas'));
     }
 
-    public function catatankasussiswa(){
+    public function catatankasussiswa($id){
+        $siswa = Tsiswa::with('detail')->findOrFail($id);
+        return view('user.catatankasussiswa',compact('siswa'));
+    }
+
+    public function catatankasussiswasimpan(Request $request)
+    {
+        $request->validate([
+            'tanggal'       => 'required|data',
+            'namaguru'      => 'required|string|max:100',
+            'deskripsi'     => 'required|integer',
+            'jumlahpoin'    => 'required|integer',
+            'kelas'         => 'nullable|string|max',
+            'idkelas'       => 'string|integer',   
+        ]);
+        $id = now()->timestamp;
+        $catsus = Tcatsus::create([
+            'id'            => $id,
+            'tanggal'       => $request->tanggal,
+            'namaguru'      => $request->namaguru,
+            'deskripsi'     => $request->deskripsi,
+            'jumlahpoin'    => $requestp->jumlahpoin,
+            'kelas'         => $request->kelas,
+            'idsiswa'       => $request->idsiswa,
+            'createat'      => now(),
+            'createby'      => auth()->user()->name ?? 'Admin',
+        ]);
+
+        Alert::success('Success','Berhasil menambahkan kasus kepada siswa');
         return view('user.catatankasussiswa');
     }
+
+    public function 
 
     public function jurnalkonseling($nam){
         $siswa = Tsiswa::with('detail')
@@ -197,7 +222,6 @@ class UserController extends Controller
         return view('user.raportsiswa');
     }
 
-    //informasi
     public function info($nam)
     {
         $isikelas = Tkelas::where('nam', $nam)->firstOrFail();
@@ -216,10 +240,7 @@ class UserController extends Controller
             'tglinfo'   => 'required|date',
             'deskripsi' => 'required|string',
         ]);
-    
-
-        $kelas = Tkelas::findOrFail($validated['idkelas']); 
-
+        $kelas = Tkelas::findOrFail($validated['idkelas']);
         $idBerikutnya = Tinfo::max('id') + 1;
         
         Tinfo::create([

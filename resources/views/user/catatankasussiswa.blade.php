@@ -16,7 +16,7 @@
     <div class="row mb-1">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <a href="{{ url('catatankasus') }}" class="btn back-btn">
+                <a href="{{ url('catatankasus') }}" class="btn btn-danger back-btn">
                     <i class="bx bx-arrow-back me-1"></i> Kembali
                 </a>
             </div>
@@ -38,7 +38,7 @@
                         <span class="fw-medium">Nama</span>
                     </div>
                     <div class="col-lg-10 col-md-6 col-sm-6">
-                        <span class="text-muted">Andre</span>
+                        <span class="text-muted"> {{  }} </span>
                     </div>
                 </div>
 
@@ -56,7 +56,7 @@
                         <span class="fw-medium">Kelas</span>
                     </div>
                     <div class="col-lg-10 col-md-6 col-sm-6">
-                        <span class="text-muted">7A</span>
+                        <span class="text-muted"> {{  }} </span>
                     </div>
                 </div>
 
@@ -73,7 +73,7 @@
     </div>
 </div>
 
-<!-- Form Input Kasus -->
+
 <div class="card">
     <h5 class="card-header text-center">Input Kasus Siswa</h5>
     <div class="card-body">

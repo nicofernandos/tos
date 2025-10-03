@@ -49,14 +49,14 @@ Route::get('/nilaisiswa',[UserController::class,'nilaisiswa']);
 Route::get('/catatankasus/{nam}',[UserController::class,'catatankasus']);
 
 //2.F.1
-Route::get('/catatankasussiswa',[UserController::class,'catatankasussiswa']);
+Route::get('/catatankasussiswa/{id}',[UserController::class,'catatankasussiswa']);
+Route::get('/catatankasussiswasimpan',[UserController::class,'catatankasussiswasimpan'])
 
 //2.G
 Route::get('/jurnalkonseling/{nam}',[UserController::class,'jurnalkonseling']);
 
 //2.G.1
 Route::get('/jurnalkonselingsiswa',[UserController::class,'jurnalkonselingsiswa']);
-
 
 //2.H
 Route::get('/raport/{nam}',[UserController::class,'raport']);
@@ -75,8 +75,5 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 //Auth
 Route::middleware(['isLogin'])->controller(AdminController::class)->group(function () {
-   
-    
-
 
 });
