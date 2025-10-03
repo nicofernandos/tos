@@ -11,7 +11,8 @@ class Tinfo extends Model
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $keyType = 'int';
-    protected $fillable = [
+    protected $fillable = [ 
+        'id',
         'idkelas',
         'tglinfo',
         'deskripsi',

@@ -29,26 +29,36 @@
 <div class="card mt-2">
     <h5 class="card-header text-center">Informasi</h5>
     <div class="card-body">
-        <div class="row mb-3">
-            <label class="col-sm-2 col-form-control mb-2" for=""> Tanggal  </label>
-            <div class="col-sm-10">
-                <input type="date" name="tanggal" class="form-control" id="" value="" placeholder="Jenis Nilai">
-            </div>
-        </div>
-        <div class="row mb-4">
-            <label class="col-sm-2 col-form-label">Deskripsi Informasi</label>
-            <div class="col-sm-10">
-                <div id="editorDeskripsi"></div>
-                <textarea name="deskripsi" id="deskripsi" style="display:none;" required></textarea>
-            </div>
-        </div>
+   
+        <form action="{{ url('/simpaninfo') }}" method="POST" id="infosimpan">
+            @csrf
+            <input type="hidden" name="idkelas" value="{{ $idkelas }}">
 
-        <div class="row">
-            <div class="col-sm-12 d-flex justify-content-center">
-                <button type="sumbit" class="btn btn-primary me-2">Simpan</button>
-                <a href="" class="btn btn-danger"> Batal </a>
+            <!-- field tanggal -->
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-control mb-2" for=""> Tanggal </label>
+                <div class="col-sm-10">
+                    <input type="date" name="tglinfo" class="form-control" required>
+                </div>
             </div>
-        </div>
+
+            <!-- field deskripsi -->
+            <div class="row mb-4">
+                <label class="col-sm-2 col-form-label">Deskripsi Informasi</label>
+                <div class="col-sm-10">
+                    <div id="editorDeskripsi"></div>
+                    <textarea name="deskripsi" id="deskripsi" style="display:none;" required></textarea>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary me-2">Simpan</button>
+                    <a href="{{ url('kelas/'.$isikelas->id) }}" class="btn btn-danger"> Batal </a>
+                </div>
+            </div>
+        </form>
+
 
     </div>
 </div>

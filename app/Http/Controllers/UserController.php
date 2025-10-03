@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 use App\Models\Tkelas;
+use Illuminate\Validation\Rule;
+use App\Models\Tinfo;
 use App\Models\Tkelasjenis;
 use App\Models\Tsiswa;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
@@ -195,8 +197,44 @@ class UserController extends Controller
         return view('user.raportsiswa');
     }
 
-    public function info($nam){
-        $isikelas = Tkelas::where('nam',$nam)->first();
-        return view('user.info',compact('isikelas'));
+    //informasi
+    public function info($nam)
+    {
+        $isikelas = Tkelas::where('nam', $nam)->firstOrFail();
+        $idkelas = $isikelas->id;
+        return view('user.info', compact('isikelas', 'idkelas'));
     }
+
+    public function simpaninfo(Request $request)
+    {
+        $validated = $request->validate([
+            'idkelas' => [
+                'required',
+                'integer',
+                Rule::exists((new Tkelas)->getConnectionName().'.'.(new Tkelas)->getTable(), 'id')
+            ],
+            'tglinfo'   => 'required|date',
+            'deskripsi' => 'required|string',
+        ]);
+    
+
+        $kelas = Tkelas::findOrFail($validated['idkelas']); 
+
+        $idBerikutnya = Tinfo::max('id') + 1;
+        
+        Tinfo::create([
+            'id'        => $idBerikutnya,
+            'idkelas'   => $validated['idkelas'],
+            'tglinfo'   => $validated['tglinfo'],
+            'deskripsi' => $validated['deskripsi'],
+            'createat'  => now(),
+            'createby'  => auth()->user()->name ?? 'System Manual',
+        ]);
+
+        Alert::success('Success', 'Berhasil memberikan info ke kelas: ' . $kelas->nam);
+        return redirect('kelas/' . $kelas->id);
+    }
+
+
+
 }

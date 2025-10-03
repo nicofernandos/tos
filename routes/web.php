@@ -66,7 +66,8 @@ Route::get('/raportsiswa',[UserController::class,'raportsiswa']);
 
 
 //2.I
-Route::get('/info/{nam}',[UserController::class,'info']);
+    Route::get('/info/{nam}',[UserController::class,'info']);
+    Route::post('/simpaninfo',[UserController::class,'simpaninfo']);
 
 
 Route::post('/login', [AuthController::class, 'login']);

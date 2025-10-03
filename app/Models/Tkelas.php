@@ -7,12 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Tkelas extends Model
 {
     protected $connection = 'maiadminmedan';
-    protected $table = 'Tkelas';
+    protected $table = 'tkelas';
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $keyType = 'int';
     protected $fillable = [
-        'id',
         'tin',
         'idta',
         'nam',
