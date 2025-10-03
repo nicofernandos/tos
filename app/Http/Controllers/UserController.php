@@ -188,12 +188,9 @@ class UserController extends Controller
             'createat'      => now(),
             'createby'      => auth()->user()->name ?? 'Admin',
         ]);
-
         Alert::success('Success','Berhasil menambahkan kasus kepada siswa');
         return view('user.catatankasussiswa');
     }
-
-    public function 
 
     public function jurnalkonseling($nam){
         $siswa = Tsiswa::with('detail')
