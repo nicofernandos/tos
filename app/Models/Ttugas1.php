@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Ttugas1 extends Model
 {
     protected $connection = 'maiadminmedan';
-    protected $table = 'Ttugas1',
-    protected $primaryKey = 'id',
+    protected $table = 'Ttugas1';
+    protected $primaryKey = 'id';
     public $timestamps = false;
-    protected $keyType = 'int',
+    protected $keyType = 'int';
     protected $fillable = [
         'idtiugas',
         'idsiswa',

@@ -12,66 +12,65 @@
 @endsection
 
 @section('content')
-<div class="container-fluid px-1">
+<div class="container-fluid px-1 card mb-2">
     <div class="row mb-1">
         <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <a href="{{ url('jurnalkonseling') }}" class="btn back-btn">
+            <div class="d-flex justify-content-between align-items-center mb-3 px-3 py-2">
+                <a href="{{ url('jurnalkonseling') }}" class="btn btn-danger back-btn">
                     <i class="bx bx-arrow-back me-1"></i> Kembali
                 </a>
             </div>
         </div>
     </div>
-</div>
+        <div class="row">
+            <div class="col-12 mb-3">
+                <div class="bg-light p-3 rounded">
+                    <h6 class="fw-bold text-primary mb-3">
+                        <i class="bx bx-user me-2"></i>Informasi Siswa
+                    </h6>
 
-<!-- Informasi Siswa -->
-<div class="card mb-2">
-    <div class="row">
-        <div class="col-12 mb-3">
-            <div class="bg-light p-3 rounded">
-                <h6 class="fw-bold text-primary mb-3">
-                    <i class="bx bx-user me-2"></i>Informasi Siswa
-                </h6>
+                    <div class="row mb-2">
+                        <div class="col-lg-2 col-md-6 col-sm-6">
+                            <span class="fw-medium">Nama</span>
+                        </div>
+                        <div class="col-lg-10 col-md-6 col-sm-6">
+                            <span class="text-muted">Andre</span>
+                        </div>
+                    </div>
 
-                <div class="row mb-2">
-                    <div class="col-lg-2 col-md-6 col-sm-6">
-                        <span class="fw-medium">Nama</span>
+                    <div class="row mb-2">
+                        <div class="col-lg-2 col-md-6 col-sm-6">
+                            <span class="fw-medium">Tanggal Lahir</span>
+                        </div>
+                        <div class="col-lg-10 col-md-6 col-sm-6">
+                            <span class="text-muted">10-20-12</span>
+                        </div>
                     </div>
-                    <div class="col-lg-10 col-md-6 col-sm-6">
-                        <span class="text-muted">Andre</span>
-                    </div>
-                </div>
 
-                <div class="row mb-2">
-                    <div class="col-lg-2 col-md-6 col-sm-6">
-                        <span class="fw-medium">Tanggal Lahir</span>
+                    <div class="row mb-2">
+                        <div class="col-lg-2 col-md-6 col-sm-6">
+                            <span class="fw-medium">Kelas</span>
+                        </div>
+                        <div class="col-lg-10 col-md-6 col-sm-6">
+                            <span class="text-muted">7A</span>
+                        </div>
                     </div>
-                    <div class="col-lg-10 col-md-6 col-sm-6">
-                        <span class="text-muted">10-20-12</span>
-                    </div>
-                </div>
 
-                <div class="row mb-2">
-                    <div class="col-lg-2 col-md-6 col-sm-6">
-                        <span class="fw-medium">Kelas</span>
-                    </div>
-                    <div class="col-lg-10 col-md-6 col-sm-6">
-                        <span class="text-muted">7A</span>
-                    </div>
-                </div>
-
-                <div class="row mb-2">
-                    <div class="col-lg-2 col-md-6 col-sm-6">
-                        <span class="fw-medium">Alamat</span>
-                    </div>
-                    <div class="col-lg-10 col-md-6 col-sm-6">
-                        <span class="text-muted">Jl. Merdeka No. 12</span>
+                    <div class="row mb-2">
+                        <div class="col-lg-2 col-md-6 col-sm-6">
+                            <span class="fw-medium">Alamat</span>
+                        </div>
+                        <div class="col-lg-10 col-md-6 col-sm-6">
+                            <span class="text-muted">Jl. Merdeka No. 12</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </div>
+
+<!-- Informasi Siswa -->
+
 
 <!-- Form Input Kasus -->
 <div class="card">

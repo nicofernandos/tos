@@ -50,13 +50,14 @@ Route::get('/catatankasus/{nam}',[UserController::class,'catatankasus']);
 
 //2.F.1
 Route::get('/catatankasussiswa/{id}',[UserController::class,'catatankasussiswa']);
-Route::get('/catatankasussiswasimpan',[UserController::class,'catatankasussiswasimpan'])
+Route::get('/catatankasussiswasimpan',[UserController::class,'catatankasussiswasimpan']);
 
 //2.G
 Route::get('/jurnalkonseling/{nam}',[UserController::class,'jurnalkonseling']);
 
 //2.G.1
 Route::get('/jurnalkonselingsiswa',[UserController::class,'jurnalkonselingsiswa']);
+Route::get('/jurnalkonselingsiswasimpan',[UserController::class,'jurnalkonselingsiswasimpan']);
 
 //2.H
 Route::get('/raport/{nam}',[UserController::class,'raport']);
@@ -66,8 +67,8 @@ Route::get('/raportsiswa',[UserController::class,'raportsiswa']);
 
 
 //2.I
-    Route::get('/info/{nam}',[UserController::class,'info']);
-    Route::post('/simpaninfo',[UserController::class,'simpaninfo']);
+Route::get('/info/{nam}',[UserController::class,'info']);
+Route::post('/simpaninfo',[UserController::class,'simpaninfo']);
 
 
 Route::post('/login', [AuthController::class, 'login']);

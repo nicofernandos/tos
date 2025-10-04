@@ -12,20 +12,17 @@
 @endsection
 
 @section('content')
-<div class="container-fluid px-1">
+<div class="container-fluid px-1 card">
     <div class="row mb-1">
         <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-3 px-2 py-3">
                 <a href="{{ url('catatankasus') }}" class="btn btn-danger back-btn">
                     <i class="bx bx-arrow-back me-1"></i> Kembali
                 </a>
             </div>
         </div>
     </div>
-</div>
-
-<!-- Informasi Siswa -->
-<div class="card mb-2">
+    <!-- Informasi Siswa -->
     <div class="row">
         <div class="col-12 mb-3">
             <div class="bg-light p-3 rounded">
@@ -38,7 +35,7 @@
                         <span class="fw-medium">Nama</span>
                     </div>
                     <div class="col-lg-10 col-md-6 col-sm-6">
-                        <span class="text-muted"> {{  }} </span>
+                        <span class="text-muted"> {{ $siswa->namlen}} </span>
                     </div>
                 </div>
 
@@ -56,7 +53,7 @@
                         <span class="fw-medium">Kelas</span>
                     </div>
                     <div class="col-lg-10 col-md-6 col-sm-6">
-                        <span class="text-muted"> {{  }} </span>
+                        <span class="text-muted"> {{ $siswa->kel  }} </span>
                     </div>
                 </div>
 
@@ -72,6 +69,7 @@
         </div>
     </div>
 </div>
+
 
 
 <div class="card">

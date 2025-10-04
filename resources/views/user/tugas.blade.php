@@ -39,15 +39,17 @@
         <h5 class="mb-0">Tugas & Proyek</h5>
       </div>
       <div class="card-body">
-        <form action="{{ url('') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ url('/tugassimpan') }}" method="POST" enctype="multipart/form-data">
           @csrf
 
+          <input type="hidden" name="idkelas" value="{{$isikelas->id}}">
+          <input type="hidden" name="idguru" value="{{ auth()->user()->id ?? '1' }}">
 
           {{-- Kode Tugas --}}
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label">Mata Pelajaran</label>
             <div class="col-sm-10">
-              <input type="text" name="matapelajaran" class="form-control" value="" required>
+              <input type="text" name="mapel" class="form-control" value="" required>
             </div>
           </div>
 
@@ -61,9 +63,9 @@
           
           {{-- Tanggal Pengumpulan --}}
           <div class="row mb-3">
-            <label class="col-sm-2 col-form-label">Tanggal Pengugasan</label>
+            <label class="col-sm-2 col-form-label">Tanggal Pengumpulan</label>
             <div class="col-sm-10">
-              <input type="date" name="tglpengumpulan " class="form-control" value="{{ date('Y-m-d') }}" >
+              <input type="date" name="tglpengumpulan" class="form-control" value="{{ date('Y-m-d') }}" >
             </div>
           </div>
 
@@ -71,7 +73,7 @@
         <div class="row mb-3">
             <label class="col-sm-2 col-form-label">Tugas Untuk</label>
             <div class="col-sm-10">
-                <select class="form-control" name="tugas_for" id="tugasSiswa" required>
+                <select class="form-control" name="tugasFor" id="tugasSiswa" required>
                     <option value="">-- Pilih Tugas Untuk --</option>
                     <option value="kelas">1 Kelas</option>
                     <option value="siswa">Anak Tertentu</option>

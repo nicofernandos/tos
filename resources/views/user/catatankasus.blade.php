@@ -54,7 +54,7 @@
                         <td>{{ $q->nis  ?? '-' }}</td>
                         <td>{{ $q->nisn ?? '-' }}</td>
                         <td>
-                            <a href="{{ url('catatankasussiwa/' . $q->id) }}" class="student-link">
+                            <a href="{{ url('catatankasussiswa/' . $q->id) }}" class="student-link">
                                 {{ $q->namlen ?? 'Nama tidak tersedia' }}
                             </a>
                         </td>

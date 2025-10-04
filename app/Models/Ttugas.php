@@ -12,6 +12,7 @@ class Ttugas extends Model
     public $timestamps = false;
     protected $keyType = 'int';
     protected $fillable = [
+        'id',
         'idkelas',
         'idguru',
         'mapel',

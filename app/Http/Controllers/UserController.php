@@ -5,6 +5,8 @@ use Illuminate\Validation\Rule;
 use App\Models\Tinfo;
 use App\Models\Tkelasjenis;
 use App\Models\Tsiswa;
+use App\Models\Ttugas;
+use App\Models\Ttugas1;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
@@ -80,19 +82,35 @@ class UserController extends Controller
 
     public function tugassimpan(Request $request)
     {
-        $request->validate([
-            'idkelas' => 'required|integer',
-            'idguru' => 'required|integer',
-            'mapel' => 'required|string|max:200',
-            'tglpenugasan' => 'required|date',
-            'tglpengumpulan' => 'nullable|date',
-            'judul' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
-            'lampiran' => 'nullable|string',
-            'tugasFor' => 'required|in:kelas,siswa',
-            'siswa_ids' => 'array',
-        ]);
+        try {
+            $validate = $request->validate([
+                'idkelas' => 'required|integer',
+                'idguru' => 'required|integer',
+                'mapel' => 'required|string|max:200',
+                'tglpenugasan' => 'required|date',
+                'tglpengumpulan' => 'nullable|date',
+                'judul' => 'required|string|max:255',
+                'deskripsi' => 'nullable|string',
+                'lampiran' => 'nullable|file|mimes:pdf,doc,docx,png,jpg,jpeg|max:2048',
+                'tugasFor' => 'required|in:kelas,siswa',
+                'siswa_ids' => 'array',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            dd($e->errors());
+        }
+
+        $pathLampiran = null;
+        if ($request->hasFile('lampiran')) {
+            $file = $request->file('lampiran');
+            $namaFile = time() . '_' . $file->getClientOriginalName();
+            $pathLampiran = $file->storeAs('lampiran_tugas', $namaFile, 'public');
+        }
+
+        $idTugas = Ttugas::max('id');
+        $idBaru = $idTugas + 1;
+
         $tugas = Ttugas::create([
+            'id' => $idBaru,
             'idkelas' => $request->idkelas,
             'idguru' => $request->idguru,
             'mapel' => $request->mapel,
@@ -100,41 +118,38 @@ class UserController extends Controller
             'tglpengumpulan' => $request->tglpengumpulan,
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
-            'lampiran' => $request->lampiran,
+            'lampiran' => $pathLampiran,
             'tugasFor' => $request->tugasFor,
             'createat' => now(),
             'createby' => auth()->user()->name ?? 'system',
         ]);
+
+        // Simpan detail siswa
         if ($request->tugasFor === 'kelas') {
-            $siswaList = Tsiswa::where('idkelas', $request->idkelas)->pluck('id');
-            foreach ($siswaList as $idsiswa) {
-                Ttugas1::create([
-                    'idtugas' => $tugas->id,
-                    'idsiswa' => $idsiswa,
-                    'status' => 'belum',
-                    'nilai' => null,
-                    'catatan' => null,
-                    'createat' => now(),
-                    'createby' => auth()->user()->name ?? 'system',
-                ]);
-            }
-        } 
-        elseif ($request->tugasFor === 'siswa' && $request->has('siswa_ids')) {
-            foreach ($request->siswa_ids as $idsiswa) {
-                Ttugas1::create([
-                    'idtugas' => $tugas->id,
-                    'idsiswa' => $idsiswa,
-                    'status' => 'belum',
-                    'nilai' => null,
-                    'catatan' => null,
-                    'createat' => now(),
-                    'createby' => auth()->user()->name ?? 'system',
-                ]);
-            }
+            $siswaList = Tsiswa::where('kel', $request->idkelas)->pluck('id');
+        } else {
+            $siswaList = $request->siswa_ids ?? [];
         }
 
-        return redirect()->back()->with('success', 'Tugas berhasil disimpan!');
+        foreach ($siswaList as $idsiswa) {
+            $idTugas1 = Ttugas1::max('id')+1;
+
+            Ttugas1::create([
+                'id'        => $idTugas1,
+                'idtugas'   => $idBaru,
+                'idsiswa'   => $idsiswa,
+                'status'    => 'belum',
+                'nilai'     => null,
+                'catatan'   => null,
+                'createat'  => now(),
+                'createby'  => auth()->user()->name ?? 'system',
+            ]);
+        }
+
+        Alert::success('Success','Tugas berhasil diberikan');
+        return redirect()->back();
     }
+
 
 
 
@@ -196,7 +211,6 @@ class UserController extends Controller
         $siswa = Tsiswa::with('detail')
         ->where('kel',$nam)
         ->get();
-
         $isikelas = Tkelas::where('nam',$nam)->first();
         return view('user.jurnalkonseling',compact('siswa','isikelas'));
     }
