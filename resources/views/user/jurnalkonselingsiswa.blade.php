@@ -16,7 +16,7 @@
     <div class="row mb-1">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-3 px-3 py-2">
-                <a href="{{ url('jurnalkonseling') }}" class="btn btn-danger back-btn">
+                <a href="{{ url('jurnalkonseling/'.$siswa->kel) }}" class="btn btn-danger back-btn">
                     <i class="bx bx-arrow-back me-1"></i> Kembali
                 </a>
             </div>
@@ -34,7 +34,7 @@
                             <span class="fw-medium">Nama</span>
                         </div>
                         <div class="col-lg-10 col-md-6 col-sm-6">
-                            <span class="text-muted">Andre</span>
+                            <span class="text-muted"> {{$siswa->namlen}} </span>
                         </div>
                     </div>
 
@@ -43,7 +43,7 @@
                             <span class="fw-medium">Tanggal Lahir</span>
                         </div>
                         <div class="col-lg-10 col-md-6 col-sm-6">
-                            <span class="text-muted">10-20-12</span>
+                            <span class="text-muted"> {{$siswa->tgllah}} </span>
                         </div>
                     </div>
 
@@ -52,7 +52,7 @@
                             <span class="fw-medium">Kelas</span>
                         </div>
                         <div class="col-lg-10 col-md-6 col-sm-6">
-                            <span class="text-muted">7A</span>
+                            <span class="text-muted"> {{$siswa->kel }} </span>
                         </div>
                     </div>
 
@@ -61,7 +61,7 @@
                             <span class="fw-medium">Alamat</span>
                         </div>
                         <div class="col-lg-10 col-md-6 col-sm-6">
-                            <span class="text-muted">Jl. Merdeka No. 12</span>
+                            <span class="text-muted"> {{$siswa->detail->ala}} </span>
                         </div>
                     </div>
                 </div>

@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 class Tsiswa extends Model
 {
     protected $connection = 'maidatmaspusat';
-    protected $table = 'Tsiswa';
+    protected $table = 'tsiswa';
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $keyType = 'int';

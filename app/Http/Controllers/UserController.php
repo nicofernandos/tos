@@ -93,65 +93,82 @@ class UserController extends Controller
                 'deskripsi' => 'nullable|string',
                 'lampiran' => 'nullable|file|mimes:pdf,doc,docx,png,jpg,jpeg|max:2048',
                 'tugasFor' => 'required|in:kelas,siswa',
-                'siswa_ids' => 'array',
+                'siswa_ids' => 'required_if:tugasFor,siswa|array|min:1', 
+                'siswa_ids.*' => 'integer|exists:maidatmaspusat.tsiswa,id', 
+            ], [
+                'siswa_ids.required_if' => 'Pilih minimal 1 siswa untuk tugas tertentu',
+                'siswa_ids.min' => 'Pilih minimal 1 siswa',
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
-            dd($e->errors());
+            return redirect()->back()
+                ->withErrors($e->errors())
+                ->withInput();
         }
 
-        $pathLampiran = null;
-        if ($request->hasFile('lampiran')) {
-            $file = $request->file('lampiran');
-            $namaFile = time() . '_' . $file->getClientOriginalName();
-            $pathLampiran = $file->storeAs('lampiran_tugas', $namaFile, 'public');
-        }
+        FacadesDB::beginTransaction(); 
+        
+        try {
+            $pathLampiran = null;
+            if ($request->hasFile('lampiran')) {
+                $file = $request->file('lampiran');
+                $namaFile = time() . '_' . $file->getClientOriginalName();
+                $pathLampiran = $file->storeAs('lampiran_tugas', $namaFile, 'public');
+            }
 
-        $idTugas = Ttugas::max('id');
-        $idBaru = $idTugas + 1;
+            $idTugas = Ttugas::max('id') ?? 0;
+            $idBaru = $idTugas + 1;
 
-        $tugas = Ttugas::create([
-            'id' => $idBaru,
-            'idkelas' => $request->idkelas,
-            'idguru' => $request->idguru,
-            'mapel' => $request->mapel,
-            'tglpenugasan' => $request->tglpenugasan,
-            'tglpengumpulan' => $request->tglpengumpulan,
-            'judul' => $request->judul,
-            'deskripsi' => $request->deskripsi,
-            'lampiran' => $pathLampiran,
-            'tugasFor' => $request->tugasFor,
-            'createat' => now(),
-            'createby' => auth()->user()->name ?? 'system',
-        ]);
-
-        // Simpan detail siswa
-        if ($request->tugasFor === 'kelas') {
-            $siswaList = Tsiswa::where('kel', $request->idkelas)->pluck('id');
-        } else {
-            $siswaList = $request->siswa_ids ?? [];
-        }
-
-        foreach ($siswaList as $idsiswa) {
-            $idTugas1 = Ttugas1::max('id')+1;
-
-            Ttugas1::create([
-                'id'        => $idTugas1,
-                'idtugas'   => $idBaru,
-                'idsiswa'   => $idsiswa,
-                'status'    => 'belum',
-                'nilai'     => null,
-                'catatan'   => null,
-                'createat'  => now(),
-                'createby'  => auth()->user()->name ?? 'system',
+            $tugas = Ttugas::create([
+                'id' => $idBaru,
+                'idkelas' => $request->idkelas,
+                'idguru' => $request->idguru,
+                'mapel' => $request->mapel,
+                'tglpenugasan' => $request->tglpenugasan,
+                'tglpengumpulan' => $request->tglpengumpulan,
+                'judul' => $request->judul,
+                'deskripsi' => $request->deskripsi,
+                'lampiran' => $pathLampiran,
+                'tugasFor' => $request->tugasFor,
+                'createat' => now(),
+                'createby' => auth()->user()->name ?? 'system',
             ]);
+            if ($request->tugasFor === 'kelas') {
+                $siswaList = Tsiswa::where('kel', $request->idkelas)->pluck('id')->toArray();
+            } else {
+                $siswaList = $request->siswa_ids ?? [];
+            }
+            if (empty($siswaList)) {
+                throw new \Exception('Tidak ada siswa yang dipilih');
+            }
+            $startId = Ttugas1::max('id') ?? 0;
+            $dataInsert = [];
+
+            foreach ($siswaList as $index => $idsiswa) {
+                $dataInsert[] = [
+                    'id'        => $startId + $index + 1,
+                    'idtugas'   => $idBaru,
+                    'idsiswa'   => $idsiswa,
+                    'status'    => 'belum',
+                    'nilai'     => null,
+                    'catatan'   => null,
+                    'createat'  => now(),
+                    'createby'  => auth()->user()->name ?? 'system',
+                ];
+            }
+            Ttugas1::insert($dataInsert);
+
+            FacadesDB::commit(); 
+            
+            Alert::success('Success', 'Tugas berhasil diberikan');
+            return redirect()->back();
+            
+        } catch (\Exception $e) {
+            FacadesDB::rollback(); 
+            
+            Alert::error('Error', 'Gagal menyimpan tugas: ' . $e->getMessage());
+            return redirect()->back()->withInput();
         }
-
-        Alert::success('Success','Tugas berhasil diberikan');
-        return redirect()->back();
     }
-
-
-
 
     public function penilaian($nam){
         $siswa = Tsiswa::where('kel',$nam)->get(); 
@@ -215,8 +232,9 @@ class UserController extends Controller
         return view('user.jurnalkonseling',compact('siswa','isikelas'));
     }
     
-    public function jurnalkonselingsiswa(){
-        return view('user.jurnalkonselingsiswa');
+    public function jurnalkonselingsiswa($id){
+        $siswa = Tsiswa::with('detail')->findOrFail($id);
+        return view('user.jurnalkonselingsiswa', compact('siswa'));
     }
 
     public function raport($nam){

@@ -56,7 +56,7 @@ Route::get('/catatankasussiswasimpan',[UserController::class,'catatankasussiswas
 Route::get('/jurnalkonseling/{nam}',[UserController::class,'jurnalkonseling']);
 
 //2.G.1
-Route::get('/jurnalkonselingsiswa',[UserController::class,'jurnalkonselingsiswa']);
+Route::get('/jurnalkonselingsiswa/{id}',[UserController::class,'jurnalkonselingsiswa']);
 Route::get('/jurnalkonselingsiswasimpan',[UserController::class,'jurnalkonselingsiswasimpan']);
 
 //2.H
