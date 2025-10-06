@@ -131,9 +131,9 @@
 @endsection
 
 <div class="container-fluid px-4">
-    <div class="row mb-4">
+    <div class="row mb-4 card">
         <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-3 py-2 px-3">
                 <a href="{{ url('sekolah') }}" class="btn btn-danger back-btn">
                     <i class="bx bx-arrow-back me-1"></i> Kembali
                 </a>

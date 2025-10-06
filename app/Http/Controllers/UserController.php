@@ -7,6 +7,8 @@ use App\Models\Tkelasjenis;
 use App\Models\Tsiswa;
 use App\Models\Ttugas;
 use App\Models\Ttugas1;
+use App\Models\Tcatsus;
+use App\Models\Tcatsus1;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
@@ -27,29 +29,30 @@ class UserController extends Controller
 {
 
     public function sekolah(){
-        $kelas = Tkelas::where('tin',4)->where('jen',4)->withCount('jumlahsiswa')->get();
+        $kelas      = Tkelas::where('tin',4)->where('jen',4)->withCount('jumlahsiswa')->get();
         return view('user.sekolah',compact('kelas'));
     }
 
     public function kelas($id){
-        $isikelas = Tkelas::where('id',$id)->withCount('jumlahsiswa')->firstOrFail();
+        $isikelas   = Tkelas::where('id',$id)->withCount('jumlahsiswa')->firstOrFail();
         return view('user.kelas', compact('isikelas'));
     }
 
     public function siswa($nam){
-        $siswa = Tsiswa::where('kel',$nam)
+        $siswa      = Tsiswa::where('kel',$nam)
         ->orderBy('namlen','asc')
         ->get(); 
-        $isikelas = Tkelas::where('nam',$nam)->first();
+        $isikelas   = Tkelas::where('nam',$nam)->first();
         return view('user.siswa', compact('siswa','isikelas'));
     }
 
     public function datasiswa($id){
         // $detailsiswa = Tsiswa::with('detailsiswa','detail')->findOrFail($id);
 
-        $detailsiswa = Tsiswa::with('detailsiswa', 'detail', 'kelas.tahunajaran')
+        $detailsiswa    = Tsiswa::with('detailsiswa', 'detail', 'kelas.tahunajaran')
                          ->findOrFail($id);
-        $namakelas = $detailsiswa->kel;
+        // dd($detailsiswa);
+        $namakelas      = $detailsiswa->kel;
         if($detailsiswa->detailsiswa && $detailsiswa->detailsiswa->img){
             $detailsiswa->detailsiswa->img_base64 = base64_encode($detailsiswa->detailsiswa->img);
         }
@@ -60,15 +63,15 @@ class UserController extends Controller
         $siswa = Tsiswa::where('kel', $nam)
         ->orderBy('namlen','asc')
         ->get();
-        $isikelas = Tkelas::where('nam',$nam)->first();
+        $isikelas       = Tkelas::where('nam',$nam)->first();
         return view('user.absensisiswa', compact('siswa','isikelas'));
     }
 
     public function suratizin($nam){
-        $siswa = Tsiswa::where('kel',$nam)
+        $siswa          = Tsiswa::where('kel',$nam)
         ->orderBy('namlen','asc')
         ->get();
-        $isikelas = Tkelas::where('nam',$nam)->first();
+        $isikelas       = Tkelas::where('nam',$nam)->first();
         return view('user.suratizin',compact('isikelas','siswa') );
     }
 
@@ -76,7 +79,7 @@ class UserController extends Controller
         $siswa = Tsiswa::where('kel',$nam)
         ->orderBy('namlen','asc')
         ->get();
-        $isikelas = Tkelas::where('nam',$nam)->first();
+        $isikelas       = Tkelas::where('nam',$nam)->first();
         return view('user.tugas',compact('siswa','isikelas'));
     }
 
@@ -171,13 +174,16 @@ class UserController extends Controller
     }
 
     public function penilaian($nam){
-        $siswa = Tsiswa::where('kel',$nam)->get(); 
-        $isikelas = Tkelas::where('nam',$nam)->first();
+        $siswa      = Tsiswa::where('kel',$nam)->get(); 
+        $isikelas   = Tkelas::where('nam',$nam)->first();
         return view('user.penilaian',compact('siswa','isikelas'));
     }
 
-    public function penilaiansiswa(){
-        return view('user.penilaiansiswa');
+    public function penilaiansiswa($id){
+        $siswa      = Tsiswa::with('detail')->findOrFail($id);
+        $isikelas   = Tkelas::where('nam',$siswa->kel)->first();
+        // dd($siswa);
+        return view('user.penilaiansiswa',compact('siswa','isikelas'));
     }
 
     public function nilaisiswa(){
@@ -186,63 +192,149 @@ class UserController extends Controller
     }
 
     public function catatankasus($nam){
-        $siswa = Tsiswa::with('detail')
+        $siswa      = Tsiswa::with('detail')
         ->where('kel',$nam)
         ->get();
-        $isikelas = Tkelas::where('nam',$nam)->first();
+        $isikelas   = Tkelas::where('nam',$nam)->first();
         return view('user.catatankasus',compact('siswa','isikelas'));
     }
 
     public function catatankasussiswa($id){
-        $siswa = Tsiswa::with('detail')->findOrFail($id);
+        $siswa      = Tsiswa::with('detail','kelas')->findOrFail($id);
+        dd($siswa);
         return view('user.catatankasussiswa',compact('siswa'));
     }
 
+    // public function catatankasussiswasimpan(Request $request)
+    // {
+        
+    //     try{
+    //         $validate = $request->validate([
+    //             'tanggal'       =>  'require|data',
+    //             'namaguru'      =>  'required|string|max:100',
+    //             'deskrsipsi'    =>  'required|integer',
+    //             'jumlahpoin'    =>  'required|integer',
+    //             'kelas'         =>  'nullable|string|max',
+    //             'idkelas'       =>  'string|integer',
+    //         ]);
+    //         dd($validate);
+    //     } catch (\Illuminate\Validation\ValidationException $e) {
+    //         return redirect()->back()
+    //             ->withErrors($e->errors())
+    //             ->withInput();
+    //     }
+
+    //     $request->validate([
+    //         'tanggal'       => 'required|data',
+    //         'namaguru'      => 'required|string|max:100',
+    //         'deskripsi'     => 'required|integer',
+    //         'jumlahpoin'    => 'required|integer',
+    //         'kelas'         => 'nullable|string|max',
+    //         'idkelas'       => 'string|integer',   
+    //     ]);
+    //     $id = now()->timestamp;
+    //     $catsus = Tcatsus::create([
+    //         'id'            => $id,
+    //         'tanggal'       => $request->tanggal,
+    //         'namaguru'      => $request->namaguru,
+    //         'deskripsi'     => $request->deskripsi,
+    //         'jumlahpoin'    => $requestp->jumlahpoin,
+    //         'kelas'         => $request->kelas,
+    //         'idsiswa'       => $request->idsiswa,
+    //         'createat'      => now(),
+    //         'createby'      => auth()->user()->name ?? 'Admin',
+    //     ]);
+    //     Alert::success('Success','Berhasil menambahkan kasus kepada siswa');
+    //     return view('user.catatankasussiswa');
+    // }
+
+
     public function catatankasussiswasimpan(Request $request)
     {
-        $request->validate([
-            'tanggal'       => 'required|data',
-            'namaguru'      => 'required|string|max:100',
-            'deskripsi'     => 'required|integer',
-            'jumlahpoin'    => 'required|integer',
-            'kelas'         => 'nullable|string|max',
-            'idkelas'       => 'string|integer',   
-        ]);
-        $id = now()->timestamp;
-        $catsus = Tcatsus::create([
-            'id'            => $id,
-            'tanggal'       => $request->tanggal,
-            'namaguru'      => $request->namaguru,
-            'deskripsi'     => $request->deskripsi,
-            'jumlahpoin'    => $requestp->jumlahpoin,
-            'kelas'         => $request->kelas,
-            'idsiswa'       => $request->idsiswa,
-            'createat'      => now(),
-            'createby'      => auth()->user()->name ?? 'Admin',
-        ]);
-        Alert::success('Success','Berhasil menambahkan kasus kepada siswa');
-        return view('user.catatankasussiswa');
+        try {
+            $validate = $request->validate([
+                'tanggal'     => 'required|date',
+                'namaguru'    => 'required|string|max:100',
+                'deskripsi'   => 'required|string',
+                'jumlahpoin'  => 'required|integer',
+                'kelas'       => 'nullable|string|max:100',
+                'idkelas'     => 'nullable|integer',
+                'idsiswa'     => 'required|integer',
+                'details'     => 'nullable|array',
+                'details.*.detail'      => 'nullable|string|max:255',
+                'details.*.keterangan'  => 'nullable|string|max:255',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()
+                ->withErrors($e->errors())
+                ->withInput();
+        }
+
+        FacadesDB::beginTransaction();
+        try {
+
+            $id = now()->timestamp;
+
+            $catsus = Tcatsus::create([
+                'id'          => $id,
+                'tanggal'     => $request->tanggal,
+                'namaguru'    => $request->namaguru,
+                'deskripsi'   => $request->deskripsi,
+                'jumlahpoin'  => $request->jumlahpoin,
+                'kelas'       => $request->kelas,
+                'idkelas'     => $request->idkelas,
+                'idsiswa'     => $request->idsiswa,
+                'createat'    => now(),
+                'createby'    => auth()->user()->name ?? 'Admin',
+            ]);
+
+            if (!empty($request->details)) {
+                foreach ($request->details as $detail) {
+                    if (empty($detail['detail']) && empty($detail['keterangan'])) {
+                        continue;
+                    }
+
+                    Tcatsus1::create([
+                        'idcatsus'   => $catsus->id,
+                        'detail'     => $detail['detail'] ?? null,
+                        'keterangan' => $detail['keterangan'] ?? null,
+                        'createat'   => now(),
+                        'createby'   => auth()->user()->name ?? 'Admin',
+                    ]);
+                }
+            }
+
+            FacadesDB::commit();
+
+            Alert::success('Success', 'Berhasil menambahkan kasus kepada siswa');
+            return redirect()->back();
+
+        } catch (\Exception $e) {
+            FacadesDB::rollBack();
+            return redirect()->back()->with('error', 'Gagal menyimpan data: ' . $e->getMessage());
+        }
     }
 
+
     public function jurnalkonseling($nam){
-        $siswa = Tsiswa::with('detail')
+        $siswa      = Tsiswa::with('detail')
         ->where('kel',$nam)
         ->get();
-        $isikelas = Tkelas::where('nam',$nam)->first();
+        $isikelas   = Tkelas::where('nam',$nam)->first();
         return view('user.jurnalkonseling',compact('siswa','isikelas'));
     }
     
     public function jurnalkonselingsiswa($id){
-        $siswa = Tsiswa::with('detail')->findOrFail($id);
+        $siswa      = Tsiswa::with('detail')->findOrFail($id);
         return view('user.jurnalkonselingsiswa', compact('siswa'));
     }
 
     public function raport($nam){
-        $siswa = Tsiswa::with('detail')
+        $siswa      = Tsiswa::with('detail')
         ->where('kel',$nam)
         ->get();
 
-        $isikelas = Tkelas::where('nam',$nam)->first();
+        $isikelas   = Tkelas::where('nam',$nam)->first();
 
         return view('user.raport',compact('siswa','isikelas'));
     }
@@ -253,8 +345,8 @@ class UserController extends Controller
 
     public function info($nam)
     {
-        $isikelas = Tkelas::where('nam', $nam)->firstOrFail();
-        $idkelas = $isikelas->id;
+        $isikelas   = Tkelas::where('nam', $nam)->firstOrFail();
+        $idkelas    = $isikelas->id;
         return view('user.info', compact('isikelas', 'idkelas'));
     }
 

@@ -2,11 +2,11 @@
 @section('title','TOS Catatan Kasus')
 @section('content')
 
-<div class="container-fluid px-4">
+<div class="container-fluid px-4 card mb-2">
     <div class="row mb-4">
         <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <a href="{{ url('kelas/'.$isikelas->id) }}" class="btn back-btn">
+            <div class="d-flex justify-content-between align-items-center mb-3 py-2 px-3">
+                <a href="{{ url('kelas/'.$isikelas->id) }}" class="btn btn-danger back-btn">
                     <i class="bx bx-arrow-back me-1"></i> Kembali
                 </a>
             </div>
@@ -17,16 +17,13 @@
                         <img src="{{ asset('foto/sklh.jpeg') }}" class="img-fluid" style="border-radius: 20px; max-height:200px;"  alt="">
                     </div>
                     <div class="col-md-7">
-                        <h1 class="display-4 fw-bold mb-2">Kelas 7A</h1>
+                        <h1 class="display-4 fw-bold mb-2">Kelas {{$isikelas->nam}}</h1>
                         <h3 class="display-4 fw-bold mt-1">Catatan Kasus</h3>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-
 </div>
 
 <div class="card">

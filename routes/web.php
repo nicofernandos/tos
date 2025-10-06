@@ -40,7 +40,7 @@ Route::post('/tugassimpan',[UserController::class,'tugassimpan']);
 Route::get('/penilaian/{nam}', [UserController::class, 'penilaian']);
 
 //2.E.1
-Route::get('/penilaiansiswa',[UserController::class,'penilaiansiswa']);
+Route::get('/penilaiansiswa/{id}',[UserController::class,'penilaiansiswa']);
 
 //2.E.1.A
 Route::get('/nilaisiswa',[UserController::class,'nilaisiswa']);
@@ -50,7 +50,7 @@ Route::get('/catatankasus/{nam}',[UserController::class,'catatankasus']);
 
 //2.F.1
 Route::get('/catatankasussiswa/{id}',[UserController::class,'catatankasussiswa']);
-Route::get('/catatankasussiswasimpan',[UserController::class,'catatankasussiswasimpan']);
+Route::post('/catatankasussiswasimpan',[UserController::class,'catatankasussiswasimpan']);
 
 //2.G
 Route::get('/jurnalkonseling/{nam}',[UserController::class,'jurnalkonseling']);

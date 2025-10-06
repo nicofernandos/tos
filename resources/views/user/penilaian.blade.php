@@ -20,11 +20,11 @@
 </style>
 @endsection
 
-<div class="container-fluid px-4">
+<div class="container-fluid px-4 card mb-2">
     <div class="row mb-4">
         <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <a href="{{ url('kelas/'.$isikelas->id) }}" class="btn back-btn">
+            <div class="d-flex justify-content-between align-items-center mb-3 px-2 py-3">
+                <a href="{{ url('kelas/'.$isikelas->id) }}" class="btn btn-danger back-btn">
                     <i class="bx bx-arrow-back me-1"></i> Kembali
                 </a>
             </div>
@@ -62,7 +62,6 @@
                             <th>UTS</th>
                             <th>UAS</th>
                             <th>Nilai Akhir</th>
-                            <th>Keterangan</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -72,7 +71,7 @@
                                 <td>{{ $q->nis }}</td>
                                 <td>{{ $q->nisn }}</td>
                                 <td> 
-                                    <a href="{{ url('datasiswa/'. $q->id) }} " class="student-link">
+                                    <a href="{{ url('penilaiansiswa/'. $q->id) }} " class="student-link">
                                     {{ $q->namlen ?? 'Nama siswa tidak tersedia' }}
                                     </a>
                                 </td>
@@ -82,7 +81,6 @@
                                 <td class="text-center">-</td>
                                 <td class="text-center">-</td>
                                 <td class="text-center">80</td>
-                                <td class="text-center">-</td>
                             </tr>
                         @endforeach
                     </tbody>

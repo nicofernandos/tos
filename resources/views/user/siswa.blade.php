@@ -99,7 +99,7 @@
         <div class="card-body">
             @if(isset($siswa) && $siswa->count() > 0)
                 <div class="table-responsive text-nowrap">
-                    <table id="table" class="table table-striped table-bordered dt-responsive nowrap w-100">
+                    <table id="table" class="table table-striped table-border table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
                                 <th>No</th>
