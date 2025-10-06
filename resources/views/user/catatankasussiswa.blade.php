@@ -41,7 +41,7 @@
                     </h6>
 
                     <div class="row mb-2">
-                        <div class="col-lg-6">
+                        <div class="col-sm-6 col-md-6 col-lg-6">
                             <div class="mb-2 row">
                                 <div class="col-5 fw-medium">Nama</div>
                                 <div class="col-7 text-dark">{{ $siswa->namlen }}</div>
@@ -67,7 +67,7 @@
                                 <div class="col-7 text-dark">{{ $siswa->temlah }}</div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-sm-6 col-md-6 col-lg-6">
                             <div class="mb-2 row">
                                 <div class="col-5 fw-medium">Kelas</div>
                                 <div class="col-7 text-dark">{{ $siswa->kel }}</div>

@@ -201,7 +201,6 @@ class UserController extends Controller
 
     public function catatankasussiswa($id){
         $siswa      = Tsiswa::with('detail','kelas')->findOrFail($id);
-        dd($siswa);
         return view('user.catatankasussiswa',compact('siswa'));
     }
 
