@@ -31,5 +31,15 @@ class Tkelas extends Model
         return $this->belongsTo(Ttahunajaran::class, 'idta', 'id');
     }
 
+    public function kelassiswa()
+    {
+        return $this->hasMany(Tkelsis::class,'idkel','id');
+    }
+
+    public function pelajaran()
+    {
+        return $this->hasMany(Tpelajaran::class,'idk','id');
+    }
+
 
 } 

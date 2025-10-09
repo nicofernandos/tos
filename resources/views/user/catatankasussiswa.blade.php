@@ -2,8 +2,26 @@
 
     @section('title', 'TOS Penilaian')
 
-    @section('style')
+    @section('styles')
     <style>
+
+    .back-btn {
+        background: linear-gradient(135deg, #ff4d4d 0%, #b30000 100%);
+        border: none;
+        padding: 0.5rem 1.5rem;
+        border-radius: 25px;
+        color: white;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+    .back-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(108,117,125,0.3);
+        background: linear-gradient(135deg, #e60000 0%, #800000 100%);
+        color: white;
+        text-decoration: none;
+    }
         .nilai-input {
             width: 80px;
             text-align: center;
@@ -25,7 +43,7 @@
         <div class="row mb-1">
             <div class="col-12">
                 <div class="d-flex justify-content-between align-items-center mb-3 px-2 py-3">
-                    <a href="{{ url('catatankasus/'.$siswa->kel) }}" class="btn btn-danger back-btn">
+                    <a href="{{ url('catatankasus/'.$siswa->kel) }}" class="btn back-btn">
                         <i class="bx bx-arrow-back me-1"></i> Kembali
                     </a>
                 </div>

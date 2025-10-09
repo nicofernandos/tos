@@ -1,5 +1,40 @@
 @extends('layouts.userlayouts')
-@section('title','TOS Jurnal Konseling')
+@section('title','TOS Jurnal Konseling')\
+
+@section('styles')
+<style>
+.back-btn {
+    background: linear-gradient(135deg, #ff4d4d 0%, #b30000 100%);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 25px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.back-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+    background: linear-gradient(135deg, #e60000 0%, #800000 100%);
+    color: white;
+    text-decoration: none;
+}
+.student-link{
+color:#667eea;
+text-decoration: none;
+font-weight:500;
+}
+.student-link:hover {
+color : #764ba2;
+}
+</style>
+@endsection
+
+
 @section('content')
 
 <div class="container-fluid px-4">
@@ -8,7 +43,7 @@
         <div class="row mb-4">
             <div class="col-12">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <a href="{{ url('kelas/'.$isikelas->id) }}" class="btn btn-danger back-btn">
+                    <a href="{{ url('kelas/'.$isikelas->id) }}" class="btn back-btn">
                         <i class="bx bx-arrow-back me-1"></i> Kembali
                     </a>
                 </div>
@@ -49,14 +84,14 @@
                         @foreach ($siswa as $q )
                         <tr>
                             <td>{{ $no++ }}</td>
-                            <td>{{ $q->nis  ?? '-' }}</td>
-                            <td>{{ $q->nisn ?? '-' }}</td>
+                            <td>{{ $q->siswa->nis  ?? '-' }}</td>
+                            <td>{{ $q->siswa->nisn ?? '-' }}</td>
                             <td>
-                                <a href="{{ url('jurnalkonselingsiswa/' . $q->id) }}" class="student-link">
-                                    {{ $q->namlen ?? 'Nama tidak tersedia' }}
+                                <a href="{{ url('jurnalkonselingsiswa/'.$q->isikelas->id.'/' . $q->siswa->id) }}" class="student-link">
+                                    {{ $q->siswa->namlen ?? 'Nama tidak tersedia' }}
                                 </a>
                             </td>
-                            <td> {{ $q->kel  }} </td>
+                            <td> {{ $q->siswa->kel  }} </td>
                         </tr>
                         @endforeach
                     </tbody>

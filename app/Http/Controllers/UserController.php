@@ -9,6 +9,9 @@ use App\Models\Ttugas;
 use App\Models\Ttugas1;
 use App\Models\Tcatsus;
 use App\Models\Tcatsus1;
+use App\Models\Ttingkat;
+use App\Models\Tkelsis;
+use App\Models\Tpelajaran;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
@@ -19,7 +22,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 use Midtrans\Snap;
-use Midtrans\Config;
+use Midtrans\Config;    
 use Illuminate\Support\Facades\File;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
@@ -28,21 +31,46 @@ use function PHPUnit\Framework\isEmpty;
 class UserController extends Controller
 {
 
-    public function sekolah(){
-        $kelas      = Tkelas::where('tin',4)->where('jen',4)->withCount('jumlahsiswa')->get();
-        return view('user.sekolah',compact('kelas'));
+    public function jenjang()
+    {
+        $jenjang = Ttingkat::all();
+        return view('user.jenjang',compact('jenjang'));
     }
+
+    // public function sekolah($tin){
+        // $kelas      = Tkelas::where('tin',4)->where('jen',4)->withCount('kelassiswa')->get();
+    //      $jenjang    = Ttingkat::where('id',$tin)->first();
+    //      $kelas      = Tkelas::with('tahunajaran')->where('tin',$tin)->where('jen',$tin)->where('staakt',1)->withCount('jumlahsiswa')->get();
+    //      return view('user.sekolah',compact('kelas','jenjang'));
+    // }
+
+    public function sekolah($tin)
+    {
+        $jenjang = Ttingkat::where('id', $tin)->first();
+
+        $kelas = Tkelas::with(['tahunajaran'])
+            ->where('tin', $tin)
+            ->where('jen', $tin)
+            ->whereHas('tahunajaran', function ($q) {
+                $q->where('staakt', 1);
+            })
+            ->withCount('jumlahsiswa')
+            ->get();
+        return view('user.sekolah', compact('kelas', 'jenjang'));
+    }
+
 
     public function kelas($id){
         $isikelas   = Tkelas::where('id',$id)->withCount('jumlahsiswa')->firstOrFail();
         return view('user.kelas', compact('isikelas'));
     }
 
-    public function siswa($nam){
-        $siswa      = Tsiswa::where('kel',$nam)
-        ->orderBy('namlen','asc')
-        ->get(); 
-        $isikelas   = Tkelas::where('nam',$nam)->first();
+    public function siswa($id){
+        $isikelas = Tkelas::findOrFail($id);
+
+        $siswa    = Tkelsis::with(['siswa','detailsiswa','kelas'])
+                  ->where('idkel',$id)
+                  ->get();
         return view('user.siswa', compact('siswa','isikelas'));
     }
 
@@ -59,28 +87,35 @@ class UserController extends Controller
         return view('user.datasiswa',compact('detailsiswa','namakelas') );
     }
 
-    public function absensisiswa($nam){
-        $siswa = Tsiswa::where('kel', $nam)
-        ->orderBy('namlen','asc')
-        ->get();
-        $isikelas       = Tkelas::where('nam',$nam)->first();
+    public function absensisiswa($id){
+        $isikelas = Tkelas::findOrFail($id);
+
+        $siswa    = Tkelsis::with(['siswa','detailsiswa','kelas'])
+                        ->where('idkel',$id)
+                        ->get();
         return view('user.absensisiswa', compact('siswa','isikelas'));
     }
 
-    public function suratizin($nam){
-        $siswa          = Tsiswa::where('kel',$nam)
-        ->orderBy('namlen','asc')
-        ->get();
-        $isikelas       = Tkelas::where('nam',$nam)->first();
-        return view('user.suratizin',compact('isikelas','siswa') );
+    public function suratizin($id)
+    {
+        $isikelas = Tkelas::findOrFail($id);
+        $siswa = Tkelsis::with(['siswa', 'detailsiswa', 'kelas'])
+                    ->where('idkel', $id)
+                    ->get();
+
+        return view('user.suratizin', compact('isikelas', 'siswa'));
     }
 
-    public function tugas($nam){
-        $siswa = Tsiswa::where('kel',$nam)
-        ->orderBy('namlen','asc')
-        ->get();
-        $isikelas       = Tkelas::where('nam',$nam)->first();
+
+    public function tugas($id){
+        $isikelas   = Tkelas::findOrFail($id);
+        $siswa      = Tsiswa::where('kel',$isikelas->nam)
+                    -> orderBy('namlen','asc')
+                    ->get();
+
         return view('user.tugas',compact('siswa','isikelas'));
+        
+
     }
 
     public function tugassimpan(Request $request)
@@ -173,31 +208,63 @@ class UserController extends Controller
         }
     }
 
-    public function penilaian($nam){
-        $siswa      = Tsiswa::where('kel',$nam)->get(); 
-        $isikelas   = Tkelas::where('nam',$nam)->first();
-        return view('user.penilaian',compact('siswa','isikelas'));
+    // public function penilaian($nam){
+    //     $siswa      = Tsiswa::where('kel',$nam)->get(); 
+    //     $isikelas   = Tkelas::where('nam',$nam)->first();
+    //     return view('user.penilaian',compact('siswa','isikelas'));
+    // }
+
+    public function penilaian($idkel)
+    {
+        //bener
+        $isikelas = Tkelas::findOrFail($idkel);
+
+        // dd($isikelas)
+        $kelsis = Tkelsis::with('siswa')
+                    ->where('idkel', $idkel)
+                    ->get();
+    
+        $siswa = $kelsis->map(function ($item) {
+            return $item->siswa;
+        });
+
+
+        return view('user.penilaian', compact('isikelas', 'siswa'));
     }
 
-    public function penilaiansiswa($id){
-        $siswa      = Tsiswa::with('detail')->findOrFail($id);
-        $isikelas   = Tkelas::where('nam',$siswa->kel)->first();
-        // dd($siswa);
-        return view('user.penilaiansiswa',compact('siswa','isikelas'));
+
+    public function penilaiansiswa($id)
+    {
+        // Ambil data siswa dan detailnya
+        $siswa = Tsiswa::with('detail')->findOrFail($id);
+
+        // Cari kelas berdasarkan nama kelas siswa
+        $isikelas = Tkelas::where('nam', $siswa->kel)->first();
+
+        // Ambil semua pelajaran dari kelas tersebut
+        $pelajaran = [];
+        if ($isikelas) {
+            $pelajaran = Tpelajaran::where('idk', $isikelas->id)->get();
+        }
+
+        return view('user.penilaiansiswa', compact('siswa', 'isikelas', 'pelajaran'));
     }
 
-    public function nilaisiswa(){
-
-        return view('user.nilaisiswa');
+    public function nilaisiswa($id,$idp)
+    {
+        $siswa = Tsiswa::with('detail')->findOrFail($id);
+        $pelajaran = Tpelajaran::with('kelas')->findOrFail($idp);
+        return view('user.nilaisiswa',compact('siswa','pelajaran'));
     }
 
-    public function catatankasus($nam){
-        $siswa      = Tsiswa::with('detail')
-        ->where('kel',$nam)
-        ->get();
-        $isikelas   = Tkelas::where('nam',$nam)->first();
+    public function catatankasus($id){
+        $isikelas = Tkelas::findOrFail($id);
+        $siswa    = Tkelsis::with(['siswa','detailsiswa'])
+                    ->where('idkel',$id)
+                    ->get();
         return view('user.catatankasus',compact('siswa','isikelas'));
     }
+
 
     public function catatankasussiswa($id){
         $siswa      = Tsiswa::with('detail','kelas')->findOrFail($id);
@@ -315,36 +382,65 @@ class UserController extends Controller
     }
 
 
-    public function jurnalkonseling($nam){
-        $siswa      = Tsiswa::with('detail')
-        ->where('kel',$nam)
-        ->get();
-        $isikelas   = Tkelas::where('nam',$nam)->first();
-        return view('user.jurnalkonseling',compact('siswa','isikelas'));
-    }
+    // public function jurnalkonseling($id){
+    //     $siswa      = Tsiswa::with('detail')
+    //     ->where('kel',$nam)
+    //     ->get();
+    //     $isikelas   = Tkelas::where('nam',$nam)->first();
+    //     return view('user.jurnalkonseling',compact('siswa','isikelas'));
+    // }
     
-    public function jurnalkonselingsiswa($id){
-        $siswa      = Tsiswa::with('detail')->findOrFail($id);
-        return view('user.jurnalkonselingsiswa', compact('siswa'));
-    }
-
-    public function raport($nam){
-        $siswa      = Tsiswa::with('detail')
-        ->where('kel',$nam)
-        ->get();
-
-        $isikelas   = Tkelas::where('nam',$nam)->first();
-
-        return view('user.raport',compact('siswa','isikelas'));
-    }
-
-    public function raportsiswa(){
-        return view('user.raportsiswa');
-    }
-
-    public function info($nam)
+    public function jurnalkonseling($id)
     {
-        $isikelas   = Tkelas::where('nam', $nam)->firstOrFail();
+        $isikelas = Tkelas::findOrFail($id);
+        $siswa = Tkelsis::with(['siswa','detailsiswa'])
+                ->where('idkel',$id)
+                ->get();
+        return view('user.jurnalkonseling', compact('siswa', 'isikelas'));
+    }
+
+
+    
+    public function jurnalkonselingsiswa($idk,$ids){
+        $siswa      = Tkelsis::with(['siswa','detailsiswa','kelas'])
+                    ->where('ids',$ids)
+                    ->where('idkel',$idk)
+                    ->firstOrFail();
+        $isikelas = Tkelas::findOrFail($idk);
+        return view('user.jurnalkonselingsiswa', compact('siswa','isikelas'));
+    }
+
+    // public function raport($nam){
+    //     $siswa      = Tsiswa::with('detail')
+    //     ->where('kel',$nam)
+    //     ->get();
+
+    //     $isikelas   = Tkelas::where('nam',$nam)->first();
+
+    //     return view('user.raport',compact('siswa','isikelas'));
+    // }
+
+    public function raport($id)
+    {
+        $isikelas   = Tkelas::findOrFail($id);
+        $siswa      = Tkelsis::with(['siswa','detailsiswa','tahunajaran'])
+                    ->where('idkel',$id)
+                    ->get();    
+        return view('user.raport', compact('isikelas','siswa'));
+    }
+
+    public function raportsiswa($idk,$ids){
+        $siswa      = Tkelsis::with(['siswa','detailsiswa','kelas'])
+                    ->where('ids',$ids)
+                    ->where('idkel',$idk)
+                    ->firstOrFail();
+        $isikelas = Tkelas::findOrFail($idk);
+        return view('user.raportsiswa',compact('siswa','isikelas'));
+    }
+
+    public function info($id)
+    {
+        $isikelas   = Tkelas::findOrFail($id);
         $idkelas    = $isikelas->id;
         return view('user.info', compact('isikelas', 'idkelas'));
     }

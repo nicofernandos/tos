@@ -1,8 +1,28 @@
 @extends('layouts.userlayouts')
 @section('title','TOS Penilaian')
 @section('content')
-@section('style')
+@section('styles')
 <style>
+.back-btn {
+    background: linear-gradient(135deg, #ff4d4d 0%, #b30000 100%);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 25px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.back-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+    background: linear-gradient(135deg, #e60000 0%, #800000 100%);
+    color: white;
+    text-decoration: none;
+}
 
 .nilai-input {
     width: 80px;
@@ -24,7 +44,7 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-3 px-2 py-3">
-                <a href="{{ url('kelas/'.$isikelas->id) }}" class="btn btn-danger back-btn">
+                <a href="{{ url('kelas/'.$isikelas->id) }}" class="btn back-btn">
                     <i class="bx bx-arrow-back me-1"></i> Kembali
                 </a>
             </div>
@@ -76,11 +96,18 @@
                                     </a>
                                 </td>
                                 <td>{{ $q->kel }}</td>
-                                <td>{{ $q->jenkel == 1 ? 'Laki-laki' : 'Perempuan' }}</td>
+                                <td>@if ($q->jenkel == -1)
+                                    Laki -laki
+                                    @elseif ( $q->jenkel == 0)
+                                    Perempuan
+                                    @else
+                                    -
+                                    @endif
+                                </td>
                                 <td class="text-center">-</td>
                                 <td class="text-center">-</td>
                                 <td class="text-center">-</td>
-                                <td class="text-center">80</td>
+                                <td class   ="text-center">80</td>
                             </tr>
                         @endforeach
                     </tbody>

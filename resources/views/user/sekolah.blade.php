@@ -4,7 +4,7 @@
 
 @section('content')
 
-@section('style')
+@section('styles')
 <style>
 
 .classroom-card {
@@ -24,9 +24,13 @@
 
 .classroom-info:hover {
   transform: translateY(-3px) !important;
-  background-color: black !important;
+  background-color: rgb(13, 97, 198) !important;
   color: white !important;  
   box-shadow: 0 4px 15px rgba(0,123,255,0.3) !important;
+}
+
+.classroom-card:hover h1{
+  color:white !important;
 }
 
 .classroom-image {
@@ -43,6 +47,13 @@
   font-weight: bold;
   color: #333;
   text-align: center;
+}
+
+.classroom-name:hover{
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  text-align:center;
 }
 
 .footer-info {
@@ -74,9 +85,9 @@
       <div class="col-12">
         <div class="header-section text-center">
           <h1 class="header-title">
-            <i class="bx bx-graduation me-3"></i>
             Sistem TOS
           </h1>
+          <h2 class="secheader-title">Jenjang {{$jenjang->nam}} </h2>
           <p class="header-subtitle">Kelola dan Pantau Aktivitas Kelas dengan Mudah</p>
         </div>
       </div>
@@ -90,7 +101,7 @@
           <div class="card-body p-3 position-relative">
             <img src="{{ asset('foto/sklh.jpeg') }}" alt="Kelas {{ $k->nam }}" class="classroom-image w-100 mb-3">
             <div class="classroom-info border border-primary p-2 rounded-3">
-              <div class="classroom-name text-center"> {{ $k->nam }} </div>
+              <div class="classroom-name text-center"> {{ $k->nam }}  </div>
             </div>
           </div>
         </a>

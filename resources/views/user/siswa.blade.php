@@ -1,62 +1,70 @@
 @extends('layouts.userlayouts')
 @section('title','TOS - Data Siswa')
 
-@section('style')
+@section('styles')
 <style>
-    .back-btn {
-        background: #f8f9fa;
-        border: 1px solid #dee2e6;
-        color: #6c757d;
-        border-radius: 8px;
-        padding: 8px 16px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-    }
-    .back-btn:hover {
-        background: #e9ecef;
-        color: #495057;
-    }
-    .class-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 20px;
-        padding: 2rem;
-        color: white;
-        margin-bottom: 2rem;
-    }
-    .class-header h1, .class-header h3 {
-        color: white;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    }
-    .card {
-        border-radius: 15px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-        border: none;
-    }
-    .card-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border-radius: 15px 15px 0 0 !important;
-        padding: 1.5rem;
-        border: none;
-    }
-    .table {
-        margin-bottom: 0;
-    }
-    .table th {
-        background: #f8f9fa;
-        border-color: #dee2e6;
-        font-weight: 600;
-        color: #495057;
-    }
-    .student-link {
-        color: #667eea;
-        text-decoration: none;
-        font-weight: 500;
-    }
-    .student-link:hover {
-        color: #764ba2;
-        text-decoration: underline;
-    }
+.back-btn {
+    background: linear-gradient(135deg, #ff4d4d 0%, #b30000 100%);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 25px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.back-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+    background: linear-gradient(135deg, #e60000 0%, #800000 100%);
+    color: white;
+    text-decoration: none;
+}
+
+.class-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    padding: 2rem;
+    color: white;
+    margin-bottom: 2rem;
+}
+.class-header h1, .class-header h3 {
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+.card {
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+    border: none;
+}
+.card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 15px 15px 0 0 !important;
+    padding: 1.5rem;
+    border: none;
+}
+.table {
+    margin-bottom: 0;
+}
+.table th {
+    background: #f8f9fa;
+    border-color: #dee2e6;
+    font-weight: 600;
+    color: #495057;
+}
+.student-link {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+}
+.student-link:hover {
+    color: #764ba2;
+    text-decoration: underline;
+}
 </style>
 @endsection
 
@@ -66,7 +74,7 @@
         <div class="row mb-4">
             <div class="col-12">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <a href="{{ url('kelas/'.$isikelas->id) }}" class="btn btn-danger back-btn">
+                    <a href="{{ url('kelas/'.$isikelas->id) }}" class="btn back-btn">
                         <i class="bx bx-arrow-back me-1"></i> Kembali
                     </a>
                 </div>
@@ -116,30 +124,30 @@
                             @foreach ($siswa as $k)
                             <tr>
                                 <td>{{ $no++ }}</td>
-                                <td>{{ $k->nis ?? '-' }}</td>
-                                <td>{{ $k->nisn ?? '-' }}</td>
+                                <td>{{ $k->siswa->nis ?? '-' }}</td>
+                                <td>{{ $k->siswa->nisn ?? '-' }}</td>
                                 <td>
-                                    <a href="{{ url('datasiswa/' . $k->id) }}" class="student-link">
-                                        {{ $k->namlen ?? 'Nama tidak tersedia' }}
+                                    <a href="{{ url('datasiswa/' . $k->->siswa->id) }}" class="student-link">
+                                        {{ $k->siswa->namlen ?? 'Nama tidak tersedia' }}
                                     </a>
                                 </td>
                                 <td>
-                                    @if($k->tgllah)
-                                        {{ \Carbon\Carbon::parse($k->tgllah)->format('d/m/Y') }}
+                                    @if($k->siswa->tgllah)
+                                        {{ \Carbon\Carbon::parse($k->siswa->tgllah)->format('d/m/Y') }}
                                     @else
                                         -
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($k->jenkel == 1)
+                                    @if ($k->siswa->jenkel == 1)
                                         Laki - Laki
-                                    @elseif ($k->jenkel == 2)
+                                    @elseif ($k->siswa->jenkel == 2)
                                         Perempuan
                                     @else
                                     -    
                                     @endif
                                 </td>
-                                <td>{{ $k->tel ?? '-' }}</td>
+                                <td>{{ $k->siswa->tel ?? '-' }}</td>
                             </tr>
                         @endforeach
 

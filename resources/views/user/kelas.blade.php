@@ -1,7 +1,7 @@
 @extends('layouts.userlayouts')
 @section('title','TOS')
 @section('content')
-@section('style')
+@section('styles')
 <style>
 .class-header {
   background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
@@ -70,7 +70,7 @@
 }
 
 .back-btn {
-  background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+  background: linear-gradient(135deg, #ff4d4d 0%, #b30000 100%);
   border: none;
   padding: 0.5rem 1.5rem;
   border-radius: 25px;
@@ -81,7 +81,7 @@
 .back-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(108,117,125,0.3);
-  background: linear-gradient(135deg, #495057 0%, #343a40 100%);
+  background: linear-gradient(135deg, #e60000 0%, #800000 100%);
   color: white;
 }
 
@@ -134,7 +134,7 @@
     <div class="row mb-4 card">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-3 py-2 px-3">
-                <a href="{{ url('sekolah') }}" class="btn btn-danger back-btn">
+                <a href="{{ url('sekolah/'.$isikelas->tin) }}" class="btn back-btn">
                     <i class="bx bx-arrow-back me-1"></i> Kembali
                 </a>
             </div>
@@ -145,9 +145,9 @@
                         <img src="{{ asset('foto/sklh.jpeg') }}" class="img-fluid" style="border-radius: 20px; max-height:200px;"  alt="">
                     </div>
                     <div class="col-md-7">
-                        <h1 class="display-4 fw-bold mb-2">Kelas {{ $isikelas->nam }}</h1>
+                        <h1 class="display-4 fw-bold text-white mb-2">Kelas {{ $isikelas->nam }}</h1>
                         <p class="lead mb-0">{{ $isikelas->jumlahsiswa_count }} Murid</p>
-                        <span class="text-muted">Wali Kelas : Pak Tarno</span>
+                        <span class=" text-white">Wali Kelas : Pak Tarno</span>
                     </div>
                 </div>
             </div>
@@ -155,9 +155,9 @@
     </div>
 
     <div class="row g-4">
-        <div class="col-6 col-md-4 col-lg-3">
-            <a href="{{ url('siswa/'.$isikelas->nam) }}" class="card menu-card d-block p-4">
-                <div class="text-center">
+        <div class="col-6 col-md-4 col-lg-3 mb-2">
+            <a href="{{ url('siswa/'.$isikelas->id) }}" class="card menu-card d-block p-4">
+                <div class="text-center mb-2">
                     <i class="bx bx-group menu-icon"></i>
                     <h5 class="menu-title">Data Siswa</h5>
                 </div>
@@ -165,7 +165,7 @@
         </div>
 
         <div class="col-6 col-md-4 col-lg-3">
-            <a href="{{ url('absensisiswa/'.$isikelas->nam)}}" class="card menu-card d-block p-4">
+            <a href="{{ url('absensisiswa/'.$isikelas->id)}}" class="card menu-card d-block p-4">
                 <div class="text-center">
                     <i class="bx bx-check-circle menu-icon"></i>
                     <h5 class="menu-title">Absensi Siswa</h5>
@@ -174,7 +174,7 @@
         </div>
 
         <div class="col-6 col-md-4 col-lg-3">
-            <a href="{{ url('suratizin/'.$isikelas->nam)  }}" class="card menu-card d-block p-4">
+            <a href="{{ url('suratizin/'.$isikelas->id)  }}" class="card menu-card d-block p-4">
                 <div class="text-center">
                     <i class="bx bx-file menu-icon"></i>
                     <h5 class="menu-title">Surat Izin Siswa</h5>
@@ -184,7 +184,7 @@
 
     
         <div class="col-6 col-md-4 col-lg-3">
-            <a href="{{ url('tugas/'.$isikelas->nam) }}" class="card menu-card d-block p-4">
+            <a href="{{ url('tugas/'.$isikelas->id) }}" class="card menu-card d-block p-4">
                 <div class="text-center">
                     <i class="bx bx-book-content menu-icon"></i>
                     <h5 class="menu-title">Tugas & Proyek</h5>
@@ -194,7 +194,7 @@
 
 
         <div class="col-6 col-md-4 col-lg-3">
-            <a href="{{ url('penilaian/'.$isikelas->nam) }}" class="card menu-card d-block p-4">
+            <a href="{{ url('penilaian/'.$isikelas->id) }}" class="card menu-card d-block p-4">
                 <div class="text-center">
                     <i class="bx bx-trophy menu-icon"></i>
                     <h5 class="menu-title">Penilaian</h5>
@@ -203,7 +203,7 @@
         </div>
 
         <div class="col-6 col-md-4 col-lg-3">
-            <a href="{{ url('catatankasus/'.$isikelas->nam) }}" class="card menu-card d-block p-4">
+            <a href="{{ url('catatankasus/'.$isikelas->id) }}" class="card menu-card d-block p-4">
                 <div class="text-center">
                     <i class="bx bx-note menu-icon"></i>
                     <h5 class="menu-title">Catatan Kasus</h5>
@@ -212,7 +212,7 @@
         </div>
 
         <div class="col-6 col-md-4 col-lg-3">
-            <a href="{{ url('jurnalkonseling/'.$isikelas->nam) }}" class="card menu-card d-block p-4">
+            <a href="{{ url('jurnalkonseling/'.$isikelas->id) }}" class="card menu-card d-block p-4">
                 <div class="text-center">
                     <i class="bx bx-chat menu-icon"></i>
                     <h5 class="menu-title">Jurnal Konseling</h5>
@@ -222,7 +222,7 @@
 
 
         <div class="col-6 col-md-4 col-lg-3">
-            <a href="{{ url('raport/'.$isikelas->nam) }}" class="card menu-card d-block p-4">
+            <a href="{{ url('raport/'.$isikelas->id) }}" class="card menu-card d-block p-4">
                 <div class="text-center">
                     <i class="bx bx-medal menu-icon"></i>
                     <h5 class="menu-title">Rapor</h5>
@@ -232,7 +232,7 @@
 
     
         <div class="col-6 col-md-4 col-lg-3">
-            <a href="{{ url('info/'.$isikelas->nam) }}" class="card menu-card d-block p-4">
+            <a href="{{ url('info/'.$isikelas->id) }}" class="card menu-card d-block p-4">
                 <div class="text-center">
                     <i class="bx bx-info-circle menu-icon"></i>
                     <h5 class="menu-title text-dark">Info</h5>

@@ -1,7 +1,7 @@
 @extends('layouts.userlayouts')
 @section('title','Detail Siswa')
 @section('content')
-@section('style')
+@section('styles')
 <style>
 .profile-header {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -25,6 +25,7 @@
     font-size: 1.8rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
+    color: white;
 }
 
 .student-id {
@@ -103,7 +104,7 @@
 }
 
 .back-btn {
-    background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+    background: linear-gradient(135deg, #ff4d4d 0%, #b30000 100%);
     color: white;
     border: none;
     padding: 0.6rem 1.2rem;
@@ -118,6 +119,7 @@
 .back-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+    background: linear-gradient(135deg, #e60000 0%, #800000 100%);
     color: white;
     text-decoration: none;
 }
@@ -182,7 +184,7 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-3 mt-2 px-2 py-3">
-                <a href="{{ url('siswa/'.$namakelas) }}" class="btn btn-danger back-btn">
+                <a href="{{ url('siswa/'.$namakelas) }}" class="btn  back-btn">
                     <i class="bx bx-arrow-back me-2"></i> Kembali ke Daftar Siswa
                 </a>
             </div>

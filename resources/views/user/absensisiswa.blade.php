@@ -1,10 +1,10 @@
 @extends('layouts.userlayouts')
 @section('title','TOS')
 @section('content')
-@section('style')
+@section('styles')
 <style>
 .back-btn {
-    background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+    background: linear-gradient(135deg, #ff4d4d 0%, #b30000 100%);
     border: none;
     padding: 0.5rem 1.5rem;
     border-radius: 25px;
@@ -16,7 +16,7 @@
 .back-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(108,117,125,0.3);
-    background: linear-gradient(135deg, #495057 0%, #343a40 100%);
+    background: linear-gradient(135deg, #e60000 0%, #800000 100%);
     color: white;
     text-decoration: none;
 }
@@ -152,7 +152,7 @@
         <div class="row mb-4">
             <div class="col-12">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <a href="{{ url('kelas/'.$isikelas->id) }}" class="btn btn-danger back-btn">
+                    <a href="{{ url('kelas/'.$isikelas->id) }}" class="btn back-btn">
                         <i class="bx bx-arrow-back me-1"></i> Kembali
                     </a>
                 </div>
@@ -163,8 +163,8 @@
                             <img src="{{ asset('foto/sklh.jpeg') }}" class="img-fluid" style="border-radius: 20px; max-height:200px;" alt="">
                         </div>
                         <div class="col-md-7">
-                            <h1 class="display-4 fw-bold mb-2"> {{ $isikelas->nam }} </h1>
-                            <h3 class="display-4 fw-bold mt-1">Absensi Siswa</h3>
+                            <h1 class="display-4 fw-bold text-white mb-2"> {{ $isikelas->nam }} </h1>
+                            <h3 class="display-4 fw-bold text-white mt-1">Absensi Siswa</h3>
                             <p class="lead mb-0">Tahun Ajaran 2024/2025 • Semester Genap</p>
                         </div>
                     </div>
@@ -205,7 +205,7 @@
 
       <!-- Table -->
       <div class="table-responsive text-nowrap w-100">
-          <table id="table" class="table table-bordered dt-responsive nowrap w-100">
+          <table id="table" class="table table-bordered table-striped dt-responsive nowrap w-100">
               <thead>
                   <tr>
                       <th>No</th>
@@ -224,10 +224,10 @@
                     @foreach ($siswa as $k )
                         <tr>
                             <td> {{$no++}} </td>
-                            <td> {{$k->nis}} </td>
-                            <td> {{$k->nisn}} </td>
-                            <td> {{$k->namlen}} </td>
-                            <td> {{ $k->kel }} </td>
+                            <td> {{$k->siswa->nis}} </td>
+                            <td> {{$k->siswa->nisn}} </td>
+                            <td> {{$k->siswa->namlen}} </td>
+                            <td> {{ $k->siswa->kel }} </td>
                             <td>2025-09-18</td>
                             <td>Hadir</td>
                             <td>-</td>

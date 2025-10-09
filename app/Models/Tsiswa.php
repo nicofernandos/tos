@@ -39,4 +39,13 @@ class Tsiswa extends Model
         return $this->belongsTo(Tkelas::class, 'kel', 'nam');
     }
 
+    public function fotosiswa()
+    {
+        return $this->hasOne(Tsiswafoto::class,'ids','id');
+    }
+
+    public function kelasis()
+    {
+        return $this->hasMany(Tkelsis::class,'ids','id');   
+    }
 }

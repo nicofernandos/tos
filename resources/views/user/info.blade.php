@@ -1,12 +1,38 @@
 @extends('layouts.userlayouts')
 @section('title','TOS Info')
+@section('styles')
+<style>
+.back-btn {
+    background: linear-gradient(135deg, #ff4d4d 0%, #b30000 100%);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 25px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.back-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+    background: linear-gradient(135deg, #e60000 0%, #800000 100%);
+    color: white;
+    text-decoration: none;
+}
+</style>
+@endsection
+
+
 @section('content')
 
 <div class="container-fluid px-4 card">
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-3 mt-2">
-                <a href="{{ url('kelas/'.$isikelas->id) }}" class="btn btn-danger back-btn">
+                <a href="{{ url('kelas/'.$isikelas->id) }}" class="btn  back-btn">
                     <i class="bx bx-arrow-back me-1"></i> Kembali
                 </a>
             </div>
