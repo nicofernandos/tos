@@ -4,24 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tnilai1 extends Model
+class Tjenisraport extends Model
 {
     protected $connection = 'maiadminmedan';
-    protected $table      = 'tnilai1';
+    protected $table      = 'tjenisraport';
     protected $primaryKey = 'id';
     public $timestamps    = false;
-    public $incrementing  = false;
     protected $keyType    = 'int';
-    protected $fillable   = [
+    protected $fillable = [
         'id',
-        'idnil',
-        'komponen',
-        'skor',
+        'nam',
         'ket',
-        'createdat',
         'createdby',
-        'updatedat',
         'updatedby',
+        'createdat',
+        'updatedat',
     ];
-
 }

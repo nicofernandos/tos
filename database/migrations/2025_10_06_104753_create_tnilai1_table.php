@@ -11,9 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tnilai1', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::connection('maiadminmedan')->create('tnilai1', function (Blueprint $table) {
+            $table->unsignedBigInteger('id')->primary();
+            $table->unsignedBigInteger('idnil');
+            $table->string('komponen',100);
+            $table->float('skor')->nullable();
+            $table->text('ket')->nullable();
+
+
+            //custom audit fields
+            $table->timestamp('createdat')->nullable();
+            $table->string('createdby', 50)->nullable();
+            $table->timestamp('updatedat')->nullable();
+            $table->string('updatedby', 50)->nullable();
         });
     }
 
@@ -22,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tnilai1');
+        Schema::connection('maiadminmedan')->dropIfExists('tnilai1');
     }
 };

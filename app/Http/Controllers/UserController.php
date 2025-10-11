@@ -11,7 +11,13 @@ use App\Models\Tcatsus;
 use App\Models\Tcatsus1;
 use App\Models\Ttingkat;
 use App\Models\Tkelsis;
+use App\Models\Tnilai;
+use App\Models\Tnilai1;
+use App\Models\Tnilai2;
 use App\Models\Tpelajaran;
+use App\Models\Ttahunajaran;
+use App\Models\Traport;
+use App\Models\Tjenisraport;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
@@ -232,22 +238,19 @@ class UserController extends Controller
         return view('user.penilaian', compact('isikelas', 'siswa'));
     }
 
-
     public function penilaiansiswa($id)
     {
-        // Ambil data siswa dan detailnya
-        $siswa = Tsiswa::with('detail')->findOrFail($id);
-
-        // Cari kelas berdasarkan nama kelas siswa
-        $isikelas = Tkelas::where('nam', $siswa->kel)->first();
-
-        // Ambil semua pelajaran dari kelas tersebut
-        $pelajaran = [];
-        if ($isikelas) {
-            $pelajaran = Tpelajaran::where('idk', $isikelas->id)->get();
-        }
-
-        return view('user.penilaiansiswa', compact('siswa', 'isikelas', 'pelajaran'));
+        $tahunAjaranAktif = Ttahunajaran::where('staakt',1)->first();
+        $kelsis            = Tkelsis::with(['siswa','kelas'])
+                            ->where('ids',$id)
+                            ->where('idta',$tahunAjaranAktif->id)
+                            ->firstOrFail();
+        $siswa             = $kelsis->siswa;
+        $isikelas         = $kelsis->kelas;
+        $pelajaran       = Tpelajaran::where('idk',$isikelas->id)
+                            ->where('idta',$tahunAjaranAktif->id)
+                            ->get();
+        return view('user.penilaiansiswa',compact('siswa','isikelas','pelajaran','tahunAjaranAktif'));
     }
 
     public function nilaisiswa($id,$idp)
@@ -256,6 +259,107 @@ class UserController extends Controller
         $pelajaran = Tpelajaran::with('kelas')->findOrFail($idp);
         return view('user.nilaisiswa',compact('siswa','pelajaran'));
     }
+
+    public function nilaisiswasimpan(Request $request)
+    {
+        FacadesDB::beginTransaction();
+
+        try {
+            $validated = $request->validate([
+                'idta' => 'required|integer',
+                'idk'  => 'required|integer',
+                'idkel'=> 'required|integer',
+                'idsis'=> 'required|integer',
+                'idpel'=> 'required|integer',
+                'nilai'=> 'nullable|numeric',
+                'ket'  => 'nullable|string',
+
+                // Tnilai1
+                'komponen'   => 'nullable|array',
+                'komponen.*' => 'nullable|string|max:100',
+                'skor'       => 'nullable|array',
+                'skor.*'     => 'nullable|numeric',
+                'ket1'       => 'nullable|array',
+                'ket1.*'     => 'nullable|string',
+
+                // Tnilai2
+                'kat'    => 'nullable|string|max:100',
+                'predi'  => 'nullable|string|max:100',
+                'ket2'   => 'nullable|string',
+            ]);
+
+            // Buat ID manual
+            $idBerikutnya = (Tnilai::max('id') ?? 0) + 1;
+
+            // Simpan data utama ke tnilai
+            $tnilai = Tnilai::create([
+                'id'        => $idBerikutnya,
+                'idta'      => $validated['idta'],
+                'idk'       => $validated['idk'],
+                'idkel'     => $validated['idkel'],
+                'idsis'     => $validated['idsis'],
+                'idpel'     => $validated['idpel'],
+                'nilai'     => $validated['nilai'] ?? null,
+                'ket'       => $validated['ket'] ?? null,
+                'createdat' => now(),
+                'createdby' => auth()->user()->name ?? 'System',
+            ]);
+
+            $idNil = $tnilai->id;
+
+            // Simpan ke Tnilai1 (jika ada data valid)
+            if (!empty($validated['komponen'])) {
+                foreach ($validated['komponen'] as $index => $komp) {
+                    if (!empty($komp) || !empty($validated['skor'][$index])) {
+
+                        $idBerikut = Tnilai1::max('id') ?? 0;
+
+                        Tnilai1::create([
+                            'id'       => $idBerikut + 1,
+                            'idnil'   => $idNil,
+                            'komponen' => $komp,
+                            'skor'     => $validated['skor'][$index] ?? null,
+                            'ket'      => $validated['ket1'][$index] ?? null,
+                            'createdat'=> now(),
+                            'createdby'=> auth()->user()->name ?? 'System',
+                        ]);
+                    }
+                }
+            }
+
+
+            // Simpan ke Tnilai2 (jika ada)
+            if (!empty($validated['kat']) || !empty($validated['predi'])) {
+                $idBerikut = Tnilai2::max('id') ?? 0;
+
+                Tnilai2::create([
+                    'id'       => $idBerikut + 1,
+                    'idnil1'   => $idNil,
+                    'kat'      => $validated['kat'] ?? null,
+                    'predi'    => $validated['predi'] ?? null,
+                    'ket'      => $validated['ket2'] ?? null,
+                    'createdat'=> now(),
+                    'createdby'=> auth()->user()->name ?? 'System',
+                ]);
+            }
+
+            FacadesDB::commit();
+
+          Alert::success('Success', 'Berhasil menyimpan nilai siswa');
+          return redirect()->to(url('penilaiansiswa/' . $validated['idsis']));
+
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            FacadesDB::rollBack();
+            return redirect()->back()->withErrors($e->errors())->withInput();
+
+        } catch (\Exception $e) {
+            FacadesDB::rollBack();
+            Alert::error('Error', 'Gagal menyimpan nilai: ' . $e->getMessage());
+            return redirect()->back()->withInput();
+        }
+    }
+
 
     public function catatankasus($id){
         $isikelas = Tkelas::findOrFail($id);
@@ -435,8 +539,128 @@ class UserController extends Controller
                     ->where('idkel',$idk)
                     ->firstOrFail();
         $isikelas = Tkelas::findOrFail($idk);
-        return view('user.raportsiswa',compact('siswa','isikelas'));
+
+        $jenisraport   = Tjenisraport::all();
+        $idtahunajaran = Ttahunajaran::where('staakt',1)->value('id');
+        $idguru        = Auth::user()->idguru ?? null ;
+        return view('user.raportsiswa',compact('siswa','isikelas','idtahunajaran','idguru','jenisraport') );
     }
+
+
+    // public function raportsiswasimpan(Request $request)
+    // {
+    //     try {
+    //         $validated = $request->validate([
+    //             'idta'      => 'required|integer',
+    //             'idkel'     => 'required|integer',
+    //             'idk'       => 'required|integer',
+    //             'idsis'     => 'required|integer',
+    //             'tipe'      => 'required|string|max:100',
+    //             'deskripsi' => 'required|string',
+    //             'raport'    => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+    //         ]);
+
+    //         $newId = (Traport::max('id') ?? 0) + 1;
+
+    //         $fileName = null;
+    //         if ($request->hasFile('raport')) {
+    //             $file = $request->file('raport');
+    //             $fileName = time() . '_' . $file->getClientOriginalName();
+    //             $file->storeAs('public/raport', $fileName);
+    //         }
+
+    //         Traport::create([
+    //             'id'        => $newId,
+    //             'idta'      => $validated['idta'],
+    //             'idkel'     => $validated['idkel'],
+    //             'idk'       => $validated['idk'],
+    //             'idsis'     => $validated['idsis'],
+    //             'tipe'      => $validated['tipe'],
+    //             'deskripsi' => $validated['deskripsi'],
+    //             'raport'    => $fileName,
+    //             'createdat' => now(),
+    //             'createdby' => auth()->user()->name ?? 'System',
+    //         ]);
+
+    //         Alert::success('Success', 'Berhasil menyimpan raport siswa');
+    //         return redirect()->to(url('raportsiswa/' . $validated['idkel'] . '/' . $validated['idsis']));
+
+    //     } catch (\Illuminate\Validation\ValidationException $e) {
+    //         return redirect()->back()->withErrors($e->errors())->withInput();
+    //     } catch (\Exception $e) {
+    //         Alert::error('Error', 'Gagal menyimpan raport: ' . $e->getMessage());
+    //         return redirect()->back()->withInput();
+    //     }
+    // }
+
+    public function raportsiswasimpan(Request $request)
+    {
+        // DEBUG: Log semua request
+        \Log::info('Form submitted', [
+            'all_data' => $request->all(),
+            'method' => $request->method(),
+            'has_deskripsi' => $request->has('deskripsi'),
+            'deskripsi_length' => strlen($request->input('deskripsi', '')),
+        ]);
+
+        // Cek apakah ada data sama sekali
+        if ($request->isMethod('post') && empty($request->all())) {
+            \Log::error('Request kosong!');
+            return back()->with('error', 'Data tidak terkirim! Cek browser console.');
+        }
+
+        try {
+            $validated = $request->validate([
+                'idta'      => 'required|integer',
+                'idkel'     => 'required|integer',
+                'idk'       => 'required|integer',
+                'idsis'     => 'required|integer',
+                'idjenisraport' => 'required|integer|exists:maiadminmedan.tjenisraport,id',
+                'tipe'      => 'required|string|max:100',
+                'deskripsi' => 'required|string',
+                'raport'    => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            ]);
+
+            \Log::info('Validasi berhasil', $validated);
+
+            $newId = (Traport::max('id') ?? 0) + 1;
+
+            $fileName = null;
+            if ($request->hasFile('raport')) {
+                $file = $request->file('raport');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $file->storeAs('public/raport', $fileName);
+            }
+
+            Traport::create([
+                'id'        => $newId,
+                'idta'      => $validated['idta'],
+                'idkel'     => $validated['idkel'],
+                'idk'       => $validated['idk'] ?? 0,
+                'idsis'     => $validated['idsis'],
+                'tipe'      => $validated['tipe'],
+                'deskripsi' => $validated['deskripsi'],
+                'raport'    => $fileName,
+                'createdat' => now(),
+                'createdby' => auth()->user()->name ?? 'System',
+            ]);
+
+            $siswa = Tsiswa::find($validated['idsis']);
+            $namaSiswa = $siswa->namlen ?? 'Unknown';
+
+            Alert::success('Success', 'Berhasil menyimpan raport siswa'. $namaSiswa);
+            return redirect()->to(url('raport/' . $validated['idkel']));
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            \Log::error('Validasi gagal', ['errors' => $e->errors()]);
+            return redirect()->back()->withErrors($e->errors())->withInput();
+        } catch (\Exception $e) {
+            \Log::error('Error saat simpan', ['message' => $e->getMessage()]);
+            Alert::error('Error', 'Gagal menyimpan raport: ' . $e->getMessage());
+            return redirect()->back()->withInput();
+        }
+    }
+
 
     public function info($id)
     {

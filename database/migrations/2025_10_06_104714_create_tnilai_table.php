@@ -9,11 +9,24 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+     public function up(): void
     {
-        Schema::create('tnilai', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::connection('maiadminmedan')->create('tnilai', function (Blueprint $table) {
+            $table->unsignedBigInteger('id')->primary();
+            $table->unsignedBigInteger('idta');  //tahunajaran
+            $table->unsignedBigInteger('idk'); //idguru
+            $table->unsignedBigInteger('idkel'); //idkelas
+            $table->unsignedBigInteger('idsis'); //idsiswa
+            $table->unsignedBigInteger('idpel'); //idpelajaran
+            $table->string('nilai',100)->nullable();
+            $table->text('ket')->nullable();
+
+
+            //custom audit fields
+            $table->timestamp('createdat')->nullable();
+            $table->string('createdby', 50)->nullable();
+            $table->timestamp('updatedat')->nullable();
+            $table->string('updatedby', 50)->nullable();
         });
     }
 
@@ -22,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tnilai');
+        Schema::connection('maiadminmedan')->dropIfExists('tnilai');
     }
 };

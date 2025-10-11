@@ -45,7 +45,10 @@ Route::get('/penilaian/{idkel}', [UserController::class, 'penilaian']);
 Route::get('/penilaiansiswa/{id}',[UserController::class,'penilaiansiswa']);
 
 //2.E.1.A
-Route::get('/nilaisiswa/{ids}/{idp}',[UserController::class,'nilaisiswa']);
+Route::get('/nilaisiswa/{ids}/{idp}',[UserController::class,'nilaisiswa'])->where('ids', '[0-9]+')->where('idp', '[0-9]+');
+Route::post('/nilaisiswasimpan',[UserController::class,'nilaisiswasimpan']);
+
+
 
 //2.F
 Route::get('/catatankasus/{id}',[UserController::class,'catatankasus']);
@@ -66,6 +69,8 @@ Route::get('/raport/{id}',[UserController::class,'raport']);
 
 //2.H.1
 Route::get('/raportsiswa/{idk}/{ids}',[UserController::class,'raportsiswa']);
+Route::post('/raportsiswasimpan', [UserController::class, 'raportsiswasimpan']);
+
 
 
 //2.I

@@ -29,10 +29,10 @@ class TpelSeeder extends Seeder
         foreach ($pelajaranList as $pel){
             Tpelajaran::create([
                 'tin' => 4,
-                'idta' => 1,
+                'idta' => 2,
                 'nam' => $pel,
                 'jen' => 4,
-                'idk' => 122,
+                'idk' => 354,
                 'Ket' => 'Pelajaran Semester Ganjil',
                 'sta' => 0,
                 'rev' => 0,

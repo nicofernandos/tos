@@ -127,7 +127,7 @@
                                 <td>{{ $k->siswa->nis ?? '-' }}</td>
                                 <td>{{ $k->siswa->nisn ?? '-' }}</td>
                                 <td>
-                                    <a href="{{ url('datasiswa/' . $k->->siswa->id) }}" class="student-link">
+                                    <a href="{{ url('datasiswa/' . $k->siswa->id) }}" class="student-link">
                                         {{ $k->siswa->namlen ?? 'Nama tidak tersedia' }}
                                     </a>
                                 </td>
